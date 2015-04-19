@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<PluginParams xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <IDService>5252428308</IDService>
+  <Procent>0.025</Procent>
+  <BountyDescription>Вознаграждение за заказ.</BountyDescription>
+  <MessageTemplate>На Ваш счет начислено {0} рублей.</MessageTemplate>
+  <NeedMakeCall>true</NeedMakeCall>
+  <NeedSendSMS>true</NeedSendSMS>
+</PluginParams>
