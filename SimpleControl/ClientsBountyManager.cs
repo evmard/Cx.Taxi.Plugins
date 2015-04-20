@@ -55,7 +55,9 @@ namespace Cx.Client.Taxi.ClientsBounty
       {
           try 
           {
-              using (Stream stream = new FileStream("ClientsBountyParams.xml", FileMode.Open))
+              string fileName = Utils.GlobalUtils.AppDirectory + "\\ClientsBountyParams.xml";
+              Utils.GlobalLogManager.WriteString("Info: Загрузка параметров плагина ClientsBountyManager. fileName = {0}", fileName);
+              using (Stream stream = new FileStream(fileName, FileMode.Open))
               {
                   XmlSerializer serializer = new XmlSerializer(typeof(PluginParams));
                   _param = (PluginParams)serializer.Deserialize(stream);
