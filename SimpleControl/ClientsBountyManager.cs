@@ -26,6 +26,9 @@ namespace Cx.Client.Taxi.ClientsBounty
       private OrderRoutine _orderRoutine;
 
       private PluginParams _param;
+      private Object _paramLock = new Object();
+      private FileSystemWatcher _watcher;
+
       public override void OnInitialize()
       {
           base.OnInitialize();
@@ -48,7 +51,16 @@ namespace Cx.Client.Taxi.ClientsBounty
           }
 
           LoadParams();
-          
+
+          _watcher = new FileSystemWatcher(Utils.GlobalUtils.AppDirectory, "ClientsBountyParams.xml");
+          _watcher.NotifyFilter = NotifyFilters.LastWrite;
+          _watcher.Changed += watcher_Changed;
+          _watcher.EnableRaisingEvents = true;         
+      }
+
+      private void watcher_Changed(object sender, FileSystemEventArgs e)
+      {
+          LoadParams();
       }
 
       private void LoadParams()
@@ -60,22 +72,34 @@ namespace Cx.Client.Taxi.ClientsBounty
               using (Stream stream = new FileStream(fileName, FileMode.Open))
               {
                   XmlSerializer serializer = new XmlSerializer(typeof(PluginParams));
-                  _param = (PluginParams)serializer.Deserialize(stream);
+                  var temp = (PluginParams)serializer.Deserialize(stream);
+                  lock(_paramLock)
+                  {
+                    _param = new PluginParams(temp);
+                  }
               }
           }
           catch (Exception e)
           {
               Utils.GlobalLogManager.WriteString("Warning: Не удалось загрузить параметры плагина ClientsBountyManager. {0}", e);
-              _param = new PluginParams();
+              lock (_paramLock)
+              {
+                  _param = new PluginParams();
+              }
           }
-
       }
 
       void _orders_StatePropertyChanged(object sender, CxPropertyChangedEventArgs<IOrder> e)
       {
+          PluginParams param;
+          lock (_paramLock)
+          {
+              param = new PluginParams(_param);
+          }
+
           var order = e.Object;
           if (order.State == OrderStates.Paid &&                //Заказ оплачен
-              order.IDService == _param.IDService &&            //с указанной услугой
+              order.IDService == param.IDService &&            //с указанной услугой
               order.Cost.HasValue && order.Cost.Value > 0.0 &&  //и не нулевой стоимостью
               order.Client != null) 
           {
@@ -92,7 +116,7 @@ namespace Cx.Client.Taxi.ClientsBounty
                   });
               }
 
-              var bountySumm = order.Cost.Value * _param.Procent;
+              var bountySumm = order.Cost.Value * param.Procent;
 
               client.Billing.Balance += bountySumm; //Пополняем счет клиента
               PaymentRoutine.PaymentRoutine.AddBillingLogsInThreadPool( //И записываем в лог
@@ -101,20 +125,20 @@ namespace Cx.Client.Taxi.ClientsBounty
                   client.Billing.ID,
                   order.ID,
                   string.Empty,
-                  _param.BountyDescription,
+                  param.BountyDescription,
                   client.Billing.Balance ?? 0,
                   BillingLogType.Client,
                   order.Number);
 
               string number = ClientManager.GetManager().GetDefaultPhone(client.ID);
-              string message = string.Format(_param.MessageTemplate, bountySumm);
+              string message = string.Format(param.MessageTemplate, bountySumm);
 
               if (!string.IsNullOrWhiteSpace(number))
               {
-                  if (_param.NeedMakeCall)
+                  if (param.NeedMakeCall)
                       CallManagementInterface.StartAutoinformator(number, message, order.ID);
 
-                  if (_param.NeedSendSMS)
+                  if (param.NeedSendSMS)
                       CallManagementInterface.SendSMS(number, message, order.ID);
               }
               else

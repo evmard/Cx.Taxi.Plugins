@@ -23,5 +23,15 @@ namespace Cx.Client.Taxi.ClientsBounty
             NeedMakeCall = true;
             NeedSendSMS = true;
         }
+
+        public PluginParams(PluginParams other)
+        {
+            IDService = other.IDService;
+            Procent = other.Procent;
+            BountyDescription = other.BountyDescription;
+            MessageTemplate = other.MessageTemplate;
+            NeedMakeCall = other.NeedMakeCall;
+            NeedSendSMS = other.NeedSendSMS;
+        }
     }
 }
