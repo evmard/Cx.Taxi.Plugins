@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ClientBonusService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.Contract" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IClientBonusService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_GetClientByPhone_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientByPhone" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_GetClientByPhone_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClientByPhoneResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_CreateNewClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNewClient" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_CreateNewClient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNewClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_PayoutFromAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:PayoutFromAccount" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_PayoutFromAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PayoutFromAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_PayInToAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:PayInToAccount" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_PayInToAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PayInToAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_SendPayinCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendPayinCode" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_SendPayinCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendPayinCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_SendPayoutCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendPayoutCode" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_SendPayoutCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendPayoutCodeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IClientBonusService">
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/Login" message="tns:IClientBonusService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/LoginResponse" message="tns:IClientBonusService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/Logout" message="tns:IClientBonusService_Logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/LogoutResponse" message="tns:IClientBonusService_Logout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClientByPhone">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/GetClientByPhone" message="tns:IClientBonusService_GetClientByPhone_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/GetClientByPhoneResponse" message="tns:IClientBonusService_GetClientByPhone_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewClient">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/CreateNewClient" message="tns:IClientBonusService_CreateNewClient_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/CreateNewClientResponse" message="tns:IClientBonusService_CreateNewClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PayoutFromAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/PayoutFromAccount" message="tns:IClientBonusService_PayoutFromAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/PayoutFromAccountResponse" message="tns:IClientBonusService_PayoutFromAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PayInToAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/PayInToAccount" message="tns:IClientBonusService_PayInToAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/PayInToAccountResponse" message="tns:IClientBonusService_PayInToAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendPayinCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/SendPayinCode" message="tns:IClientBonusService_SendPayinCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/SendPayinCodeResponse" message="tns:IClientBonusService_SendPayinCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendPayoutCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/SendPayoutCode" message="tns:IClientBonusService_SendPayoutCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/SendPayoutCodeResponse" message="tns:IClientBonusService_SendPayoutCode_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IClientBonusService" type="tns:IClientBonusService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClientByPhone">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/GetClientByPhone" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewClient">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/CreateNewClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PayoutFromAccount">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/PayoutFromAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PayInToAccount">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/PayInToAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPayinCode">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/SendPayinCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPayoutCode">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/SendPayoutCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ClientBonusService">
+    <wsdl:port name="BasicHttpBinding_IClientBonusService" binding="tns:BasicHttpBinding_IClientBonusService">
+      <soap:address location="http://localhost:23444/ClientBonusService/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

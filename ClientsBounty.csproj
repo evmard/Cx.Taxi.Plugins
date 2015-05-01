@@ -61,10 +61,6 @@
       <HintPath>BSLibs\Cx.Client.Taxi.Interfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Cx.Client.Taxi.MessageConstructor">
-      <HintPath>BSLibs\Cx.Client.Taxi.MessageConstructor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Cx.Client.Taxi.OrderRoutine">
       <HintPath>BSLibs\Cx.Client.Taxi.OrderRoutine.dll</HintPath>
       <Private>False</Private>
@@ -79,15 +75,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleControl\ClientsBountyManager.cs" />
-    <Compile Include="SimpleControl\ClientsBountyPluginInfo.cs" />
-    <Compile Include="SimpleControl\PluginParams.cs" />
+    <Compile Include="ClientsBounty\ClientsBountyManager.cs" />
+    <Compile Include="ClientsBounty\ClientsBountyPluginInfo.cs" />
+    <Compile Include="ClientsBounty\PluginParams.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

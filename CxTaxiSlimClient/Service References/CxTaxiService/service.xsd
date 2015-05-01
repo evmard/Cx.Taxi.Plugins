@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.Contract" />
+  <xs:element name="Login">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="login" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pass" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="LoginResult" nillable="true" type="q1:ResultOfLoginInfoxdEytY2q" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Logout">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q2:LoginInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogoutResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientByPhone">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q3:LoginInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetClientByPhoneResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="GetClientByPhoneResult" nillable="true" type="q4:ResultOfClientInfoxdEytY2q" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNewClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q5:LoginInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNewClientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="CreateNewClientResult" nillable="true" type="q6:ResultOfClientInfoxdEytY2q" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PayoutFromAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientId" type="xs:long" />
+        <xs:element minOccurs="0" name="operationCode" type="xs:int" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q7:LoginInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PayoutFromAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="PayoutFromAccountResult" nillable="true" type="q8:ResultOfClientInfoxdEytY2q" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PayInToAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientId" type="xs:long" />
+        <xs:element minOccurs="0" name="operationCode" type="xs:int" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q9:LoginInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PayInToAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="PayInToAccountResult" nillable="true" type="q10:ResultOfClientInfoxdEytY2q" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendPayinCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientId" type="xs:long" />
+        <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="summ" type="xs:double" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WCFPlugin.Contract" minOccurs="0" name="sendMethod" type="q11:SendMethod" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q12:LoginInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendPayinCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="SendPayinCodeResult" nillable="true" type="q13:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendPayoutCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientId" type="xs:long" />
+        <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="summ" type="xs:double" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WCFPlugin.Contract" minOccurs="0" name="sendMethod" type="q14:SendMethod" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q15:LoginInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendPayoutCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="SendPayoutCodeResult" nillable="true" type="q16:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

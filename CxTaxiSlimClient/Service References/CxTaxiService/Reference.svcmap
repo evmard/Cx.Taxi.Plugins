@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a33ecf3f-1204-410d-ad5a-1b298065f969" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:23444/ClientBonusService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="8fc7a1b2-1095-4cad-beab-9b3b74100f62" SourceId="1" SourceUrl="http://localhost:23444/ClientBonusService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="2b030eb4-eee0-4a74-98d3-7d8fda4dc361" SourceId="1" SourceUrl="http://localhost:23444/ClientBonusService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="cf176402-127a-4d3f-8aa2-4b6c8ad99697" SourceId="1" SourceUrl="http://localhost:23444/ClientBonusService/mex" />
+    <MetadataFile FileName="WCFPlugin.DataContract.xsd" MetadataType="Schema" ID="2013a2ff-9e36-41fe-a15c-7039fca59f3b" SourceId="1" SourceUrl="http://localhost:23444/ClientBonusService/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="616783d9-9cd0-4ec0-a21b-7203307b1813" SourceId="1" SourceUrl="http://localhost:23444/ClientBonusService/mex" />
+    <MetadataFile FileName="WCFPlugin.Contract.xsd" MetadataType="Schema" ID="be4f452a-5a25-450d-a71d-c6442d6a3d9f" SourceId="1" SourceUrl="http://localhost:23444/ClientBonusService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
