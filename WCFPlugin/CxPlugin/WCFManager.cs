@@ -42,34 +42,39 @@ namespace WCFPlugin.CxPlugin
 
             var httpHostStr = string.Format("{0}:{1}/ClientBonusService", _param.HostName, _param.Port);
             var tcpHostStr = string.Format("{0}:{1}/ClientBonusService", _param.HostName, _param.Port + 1);
+            GlobalLogManager.WriteString("WCFManager. Создание сервиса");
             var serviceHost = new ServiceHost(typeof (ClientBonusService));
-            _service = (ClientBonusService)serviceHost.SingletonInstance;
-            _service.DataProvider = new CxDataProvider(_param, _billings, _users);
-            _service.Params = _param;
+            GlobalLogManager.WriteString("WCFManager. Установка параметров");
+            ClientBonusService.DataProvider = new CxDataProvider(_param, _billings, _users);
+            ClientBonusService.Params = _param;
             var portsharingBinding = new NetTcpBinding();
             var httpBinding = new BasicHttpBinding();
             serviceHost.AddServiceEndpoint(typeof(IClientBonusService), portsharingBinding, "net.tcp://" + tcpHostStr);
             serviceHost.AddServiceEndpoint(typeof(IClientBonusService), httpBinding, "http://" + httpHostStr);
+            GlobalLogManager.WriteString("WCFManager. Запуск сервиса");
             serviceHost.Open();
 
             _watcher = new FileSystemWatcher(GlobalUtils.AppDirectory, PluginParams.FileName);
             _watcher.NotifyFilter = NotifyFilters.LastWrite;
             _watcher.Changed += _watcher_Changed;
-            _watcher.EnableRaisingEvents = true;  
+            _watcher.EnableRaisingEvents = true;
+            GlobalLogManager.WriteString("WCFManager. Сервис запущен");
         }
 
         void _watcher_Changed(object sender, FileSystemEventArgs e)
         {
             LoadParams();
-            _service.Params = _param;
+            ClientBonusService.Params = _param;
         }
 
         private void LoadParams()
         {
+            GlobalLogManager.WriteString("WCFManager. Загрузка параметров");
             lock (_paramLock)
             {
                 _param = PluginParams.LoadParams(GlobalUtils.AppDirectory);
             }
+            GlobalLogManager.WriteString("WCFManager. Загрузка параметров выполнена");
         }
     }
 }

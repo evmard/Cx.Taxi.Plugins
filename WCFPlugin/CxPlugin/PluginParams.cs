@@ -21,7 +21,7 @@ namespace WCFPlugin.CxPlugin
         {
             HostName = "localhost";
             Port = 23444;
-            RoleId = 1;
+            RoleId = 1000003000;
             PayinLogDescription = "Зачисление суммы через WCFPlugin";
             PayinMessageTemplate = "Ваш счет пополнен на сумму {0} руб.";
             NeedMakeCall = true;

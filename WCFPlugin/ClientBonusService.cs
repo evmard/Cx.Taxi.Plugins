@@ -22,13 +22,13 @@ namespace WCFPlugin
 
         private readonly Random _rng = new Random(DateTime.Now.Millisecond);
 
-        private ICxDataProvider _dataProvider;
-        private readonly Object _providerLock = new object();
-        public ICxDataProvider DataProvider
+        private static ICxDataProvider _dataProvider;
+        private static readonly Object ProviderLock = new object();
+        public static ICxDataProvider DataProvider
         {
             get
             {
-                lock (_providerLock)
+                lock (ProviderLock)
                 {
                     if (_dataProvider == null)
                     {
@@ -40,20 +40,20 @@ namespace WCFPlugin
             }
             set
             {
-                lock (_providerLock)
+                lock (ProviderLock)
                 {
                     _dataProvider = value;
                 }
             }
         }
 
-        private readonly Object _paramsLock = new object();
-        private PluginParams _params;
-        public PluginParams Params
+        private static readonly Object ParamsLock = new object();
+        private static PluginParams _params;
+        public static PluginParams Params
         {
             get
             {
-                lock (_paramsLock)
+                lock (ParamsLock)
                 {
                     if (_params == null)
                     {
@@ -65,7 +65,7 @@ namespace WCFPlugin
             }
             set
             {
-                lock (_paramsLock)
+                lock (ParamsLock)
                 {
                     _params = value;
                 }

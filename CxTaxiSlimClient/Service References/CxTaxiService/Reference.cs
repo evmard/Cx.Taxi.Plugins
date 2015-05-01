@@ -13,6 +13,17 @@ namespace CxTaxiSlimClient.CxTaxiService {
     using System;
     
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoleTypes", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract")]
+    public enum RoleTypes : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Payin = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Payout = 1,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract")]
@@ -171,6 +182,9 @@ namespace CxTaxiSlimClient.CxTaxiService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CxTaxiSlimClient.CxTaxiService.RoleTypes RoleTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid SessionGuidField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -183,6 +197,19 @@ namespace CxTaxiSlimClient.CxTaxiService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CxTaxiSlimClient.CxTaxiService.RoleTypes RoleType {
+            get {
+                return this.RoleTypeField;
+            }
+            set {
+                if ((this.RoleTypeField.Equals(value) != true)) {
+                    this.RoleTypeField = value;
+                    this.RaisePropertyChanged("RoleType");
+                }
             }
         }
         
@@ -622,10 +649,10 @@ namespace CxTaxiSlimClient.CxTaxiService {
     public interface IClientBonusService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/Login", ReplyAction="http://tempuri.org/IClientBonusService/LoginResponse")]
-        CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q Login([System.ServiceModel.MessageParameterAttribute(Name="login")] string login1, string pass);
+        CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q Login([System.ServiceModel.MessageParameterAttribute(Name="login")] string login1, string pass, CxTaxiSlimClient.CxTaxiService.RoleTypes roleType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/Login", ReplyAction="http://tempuri.org/IClientBonusService/LoginResponse")]
-        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q> LoginAsync(string login, string pass);
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q> LoginAsync(string login, string pass, CxTaxiSlimClient.CxTaxiService.RoleTypes roleType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/Logout", ReplyAction="http://tempuri.org/IClientBonusService/LogoutResponse")]
         void Logout(CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
@@ -697,12 +724,12 @@ namespace CxTaxiSlimClient.CxTaxiService {
                 base(binding, remoteAddress) {
         }
         
-        public CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q Login(string login1, string pass) {
-            return base.Channel.Login(login1, pass);
+        public CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q Login(string login1, string pass, CxTaxiSlimClient.CxTaxiService.RoleTypes roleType) {
+            return base.Channel.Login(login1, pass, roleType);
         }
         
-        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q> LoginAsync(string login, string pass) {
-            return base.Channel.LoginAsync(login, pass);
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q> LoginAsync(string login, string pass, CxTaxiSlimClient.CxTaxiService.RoleTypes roleType) {
+            return base.Channel.LoginAsync(login, pass, roleType);
         }
         
         public void Logout(CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {

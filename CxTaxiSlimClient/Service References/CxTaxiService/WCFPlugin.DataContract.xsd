@@ -2,6 +2,13 @@
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:simpleType name="RoleTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Payin" />
+      <xs:enumeration value="Payout" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RoleTypes" nillable="true" type="tns:RoleTypes" />
   <xs:complexType name="ResultOfLoginInfoxdEytY2q">
     <xs:annotation>
       <xs:appinfo>
@@ -40,6 +47,7 @@
   <xs:element name="ErrorTypes" nillable="true" type="tns:ErrorTypes" />
   <xs:complexType name="LoginInfo">
     <xs:sequence>
+      <xs:element minOccurs="0" name="RoleType" type="tns:RoleTypes" />
       <xs:element minOccurs="0" name="SessionGuid" type="ser:guid" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
     </xs:sequence>

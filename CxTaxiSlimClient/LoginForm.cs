@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CxTaxiSlimClient.CxTaxiService;
 using CxTaxiSlimClient.Properties;
@@ -35,7 +30,8 @@ namespace CxTaxiSlimClient
                 return;
             }
 
-            var result = await _service.LoginAsync(teLogin.Text, tePass.Text);
+            //TODO RoleType
+            var result = await _service.LoginAsync(teLogin.Text, tePass.Text, RoleTypes.Payin);
             //TODO Show progress
 
             if (!result.IsSucssied)
