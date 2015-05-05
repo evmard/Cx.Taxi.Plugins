@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:simpleType name="RoleTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Payin" />
+      <xs:enumeration value="Payout" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RoleTypes" nillable="true" type="tns:RoleTypes" />
+  <xs:complexType name="ResultOfLoginInfoxdEytY2q">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ResultOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="LoginInfo" Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Result">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Data" nillable="true" type="tns:LoginInfo" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ResultOfLoginInfoxdEytY2q" nillable="true" type="tns:ResultOfLoginInfoxdEytY2q" />
+  <xs:complexType name="Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorType" nillable="true" type="tns:ErrorTypes" />
+      <xs:element minOccurs="0" name="IsSucssied" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Result" nillable="true" type="tns:Result" />
+  <xs:simpleType name="ErrorTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DoesntLogined" />
+      <xs:enumeration value="ClientNotFound" />
+      <xs:enumeration value="NotInitialize" />
+      <xs:enumeration value="LoginOrPassIsWrong" />
+      <xs:enumeration value="UnkownError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ErrorTypes" nillable="true" type="tns:ErrorTypes" />
+  <xs:complexType name="LoginInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RoleType" type="tns:RoleTypes" />
+      <xs:element minOccurs="0" name="SessionGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginInfo" nillable="true" type="tns:LoginInfo" />
+  <xs:complexType name="ResultOfClientInfoxdEytY2q">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ResultOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ClientInfo" Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Result">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Data" nillable="true" type="tns:ClientInfo" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ResultOfClientInfoxdEytY2q" nillable="true" type="tns:ResultOfClientInfoxdEytY2q" />
+  <xs:complexType name="ClientInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddrDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Apartment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Balance" type="xs:double" />
+      <xs:element minOccurs="0" name="BillingAccountNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Birthday" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CorporationName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultDiscountCardNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultLanguage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultServiceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DiscountCards" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Entrance" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Guid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Markups" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrdersCanceled" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="OrdersCounter" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Rating" nillable="true" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClientInfo" nillable="true" type="tns:ClientInfo" />
+</xs:schema>
