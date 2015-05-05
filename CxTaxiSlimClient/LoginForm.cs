@@ -8,15 +8,35 @@ namespace CxTaxiSlimClient
     public partial class LoginForm : Form
     {
         private IClientBonusService _service;
+
+        private ClientParams _params;
         public LoginForm(IClientBonusService service)
         {
             _service = service;
             InitializeComponent();
+            _params = ClientParams.Load();
+            teLogin.Text = _params.UserName;
+            
+            if (_params.RoleType.HasValue)
+            {
+                switch (_params.RoleType.Value)
+                {
+                    case RoleTypes.Payin:
+                        cbRole.SelectedIndex = 0;
+                        break;
+                    case RoleTypes.Payout:
+                        cbRole.SelectedIndex = 1;
+                        break;
+                }
+            }
+
+            teIp.Text = _params.HostName;
+            tePort.Text = _params.Port.ToString();
         }
 
         private LoginInfo _loginInfo;
 
-        private async void button2_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
              
             if (string.IsNullOrWhiteSpace(teLogin.Text))
@@ -30,9 +50,15 @@ namespace CxTaxiSlimClient
                 return;
             }
 
-            //TODO RoleType
-            var result = await _service.LoginAsync(teLogin.Text, tePass.Text, RoleTypes.Payin);
-            //TODO Show progress
+            if (_service == null)
+            {
+                var strAddress = string.Format("http://{0}:{1}/ClientBonusService/", _params.HostName, _params.Port);
+                _service = new ClientBonusServiceClient("BasicHttpBinding_IClientBonusService", strAddress);
+            }
+
+            RoleTypes roleType = cbRole.SelectedIndex == 0 ? RoleTypes.Payin : RoleTypes.Payout;
+
+            var result = await _service.LoginAsync(teLogin.Text, tePass.Text, roleType);
 
             if (!result.IsSucssied)
             {
@@ -43,6 +69,13 @@ namespace CxTaxiSlimClient
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 return;
+            }
+
+            if (chSaveUser.Checked)
+            {
+                _params.UserName = teLogin.Text;
+                _params.RoleType = roleType;
+                _params.Save();
             }
 
             _loginInfo = result.Data;
@@ -59,6 +92,56 @@ namespace CxTaxiSlimClient
         {
             DialogResult = DialogResult.No;
             Close();
+        }
+
+        private void btnNetSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _params.HostName = teIp.Text;
+                _params.Port = int.Parse(tePort.Text);
+                var strAddress = string.Format("http://{0}:{1}/ClientBonusService/", _params.HostName, _params.Port);
+                _service = new ClientBonusServiceClient("BasicHttpBinding_IClientBonusService", strAddress);
+
+                _params.Save();
+
+                MessageBox.Show(
+                    this,
+                    Resources.LoginForm_ConnectionParamsAreSaved,
+                    Resources.LoginForm_MessageCaption,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(
+                    this,
+                    Resources.LoginForm_btnNetSave_BadData,
+                    Resources.LoginForm_MessageCaption,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                _params = ClientParams.Load();
+            }
+        }
+
+        internal IClientBonusService GetService()
+        {
+            return _service;
+        }
+
+        private void btnNetCancel_Click(object sender, EventArgs e)
+        {
+            teIp.Text = _params.HostName;
+            tePort.Text = _params.Port.ToString();
+        }
+
+        private void tePass_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                e.Handled = true;
+                btnLogin_Click(this, e);
+            }
         }
     }
 }

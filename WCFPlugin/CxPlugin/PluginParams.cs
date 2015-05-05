@@ -1,6 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Xml.Serialization;
+using WCFPlugin.DataContract;
 
 namespace WCFPlugin.CxPlugin
 {
@@ -9,7 +9,8 @@ namespace WCFPlugin.CxPlugin
         public static string FileName = "WCFPluginParams.xml";
         public string HostName { get; set; }
         public int Port { get; set; }
-        public long RoleId { get; set; }
+        public long PayInRoleId { get; set; }
+        public long PayOutRoleId { get; set; }
         public string PayinLogDescription { get; set; }
         public string PayinMessageTemplate { get; set; }
         public bool NeedMakeCall { get; set; }
@@ -21,26 +22,27 @@ namespace WCFPlugin.CxPlugin
         {
             HostName = "localhost";
             Port = 23444;
-            RoleId = 1000003000;
+            PayInRoleId = 1000003000;
+            PayOutRoleId = 1000003000;
             PayinLogDescription = "Зачисление суммы через WCFPlugin";
             PayinMessageTemplate = "Ваш счет пополнен на сумму {0} руб.";
             NeedMakeCall = true;
             NeedSendSms = true;
-            PayOutMessageTemplate = "Списание суммы через WCFPlugin";
-            PayOutLogDescription = "С Вашего счета списано {0} руб.";
+            PayOutLogDescription = "Списание суммы через WCFPlugin";
+            PayOutMessageTemplate = "С Вашего счета списано {0} руб.";
         }
 
-        public PluginParams(PluginParams other)
+        public long GetRoleId(RoleTypes roleType)
         {
-            HostName = other.HostName;
-            Port = other.Port;
-            RoleId = other.RoleId;
-            PayinLogDescription = other.PayinLogDescription;
-            PayinMessageTemplate = other.PayinMessageTemplate;
-            NeedMakeCall = other.NeedMakeCall;
-            NeedSendSms = other.NeedSendSms;
-            PayOutMessageTemplate = other.PayOutMessageTemplate;
-            PayOutLogDescription = other.PayOutLogDescription;
+            switch (roleType)
+            {
+                case RoleTypes.Payin:
+                    return PayInRoleId;
+                case RoleTypes.Payout:
+                    return PayOutRoleId;
+                default:
+                    return PayInRoleId;
+            }
         }
 
         public static void CreateFile(string path)

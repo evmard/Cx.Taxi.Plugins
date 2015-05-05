@@ -81,13 +81,13 @@ namespace WCFPlugin
 
             ICxChildConnection connection;
             string errorMsg;
-            if (DataProvider.TryGetConnection(login, pass, Params.RoleId, out connection, out errorMsg) !=
+            if (DataProvider.TryGetConnection(login, pass, Params.GetRoleId(roleType), out connection, out errorMsg) !=
                 LogonResult.OK)
             {
                 var result = Result<LoginInfo>.LoginOrPassIsWrong();
                 if (!string.IsNullOrWhiteSpace(errorMsg))
                 {
-                    result.Message += " " + errorMsg;
+                    result.Message = errorMsg;
                 }
                 return result;
             }
@@ -95,17 +95,34 @@ namespace WCFPlugin
             var loginInfo = new LoginInfo()
             {
                 SessionGuid = Guid.NewGuid(),
-                UserName = DataProvider.GetUserName(connection.IDUser)
+                UserName = DataProvider.GetUserName(connection.IDUser),
+                RoleType = roleType
             };
 
             var sessionInfo = new SessionInfo
             {
-                CanDoPayIn = true, //TODO 
-                CanDoPayout = true, //TODO
-                CanCreateNewClients = true, //TODO
                 LoginInfo = loginInfo,
                 Connection = connection
             };
+
+            switch (roleType)
+            {
+                case RoleTypes.Payin:
+                    sessionInfo.CanDoPayIn = true;
+                    sessionInfo.CanCreateNewClients = true;
+                    sessionInfo.CanDoPayout = false;
+                    break;
+                case RoleTypes.Payout:
+                    sessionInfo.CanDoPayIn = false;
+                    sessionInfo.CanCreateNewClients = false;
+                    sessionInfo.CanDoPayout = true;
+                    break;
+                default:
+                    sessionInfo.CanDoPayIn = false;
+                    sessionInfo.CanCreateNewClients = false;
+                    sessionInfo.CanDoPayout = false;
+                    break;
+            }
 
             _sessionLockSlim.EnterWriteLock();
             _session.Add(loginInfo.SessionGuid, sessionInfo);

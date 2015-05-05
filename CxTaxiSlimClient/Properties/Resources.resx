@@ -144,4 +144,16 @@
   <data name="BonusOperationsForm_btnOk_Do" xml:space="preserve">
     <value>Выполнить</value>
   </data>
+  <data name="LoginForm_ConnectionParamsAreSaved" xml:space="preserve">
+    <value>Параметры подключения сохраниены</value>
+  </data>
+  <data name="MainForm_AddNewClient" xml:space="preserve">
+    <value>Создать нового клиента?</value>
+  </data>
+  <data name="NewClientForm_Title_NewClient" xml:space="preserve">
+    <value>Новый клиент</value>
+  </data>
+  <data name="LoginForm_btnNetSave_BadData" xml:space="preserve">
+    <value>Не удалось применить настройки подключения. Проверьте правильность ввода данных.</value>
+  </data>
 </root>

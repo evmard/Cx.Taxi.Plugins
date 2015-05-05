@@ -11,7 +11,6 @@ using Cx.Client.Utils.Server;
 using WCFPlugin.Contract;
 using WCFPlugin.DataContract;
 
-
 namespace WCFPlugin.CxPlugin
 {
     public class CxDataProvider : ICxDataProvider
@@ -92,11 +91,14 @@ namespace WCFPlugin.CxPlugin
         public string GetUserName(long userId)
         {
             var user = _users.GetByID(userId);
-            return user == null ? "Не найден" : user.Name_F + user.Name_I + user.Name_O;
+            return user == null ? "Не найден" : user.Name_F + " " + user.Name_I + " " + user.Name_O;
         }
 
         public void SendCode(string phone, string text, SendMethod sendMethod)
         {
+            GlobalLogManager.WriteString("Info: WCFPlugin SendCode: phone {0}, text {1}, method {2}",
+                phone, text, sendMethod);
+
             if (string.IsNullOrWhiteSpace(phone))
                 return;
 
@@ -122,7 +124,7 @@ namespace WCFPlugin.CxPlugin
             client.Billing.Balance += amount; 
             PaymentRoutine.AddBillingLogsInThreadPool( 
                 amount,
-                BillingTypes.Order,
+                BillingTypes.Manually,
                 client.Billing.ID,
                 null /*orderId*/,
                 string.Empty,

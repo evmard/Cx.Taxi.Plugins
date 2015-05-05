@@ -70,6 +70,24 @@ namespace CxTaxiSlimClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Не удалось применить настройки подключения. Проверьте правильность ввода данных..
+        /// </summary>
+        internal static string LoginForm_btnNetSave_BadData {
+            get {
+                return ResourceManager.GetString("LoginForm_btnNetSave_BadData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Параметры подключения сохраниены.
+        /// </summary>
+        internal static string LoginForm_ConnectionParamsAreSaved {
+            get {
+                return ResourceManager.GetString("LoginForm_ConnectionParamsAreSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Вход в систему.
         /// </summary>
         internal static string LoginForm_MessageCaption {
@@ -84,6 +102,15 @@ namespace CxTaxiSlimClient.Properties {
         internal static string LoginForm_UserNameCantBeEmpty {
             get {
                 return ResourceManager.GetString("LoginForm_UserNameCantBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Создать нового клиента?.
+        /// </summary>
+        internal static string MainForm_AddNewClient {
+            get {
+                return ResourceManager.GetString("MainForm_AddNewClient", resourceCulture);
             }
         }
         
@@ -147,6 +174,15 @@ namespace CxTaxiSlimClient.Properties {
         internal static string MainForm_Title_User {
             get {
                 return ResourceManager.GetString("MainForm_Title_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Новый клиент.
+        /// </summary>
+        internal static string NewClientForm_Title_NewClient {
+            get {
+                return ResourceManager.GetString("NewClientForm_Title_NewClient", resourceCulture);
             }
         }
     }

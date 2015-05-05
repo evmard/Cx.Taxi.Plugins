@@ -1,13 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.ServiceModel;
-using System.Xml.Serialization;
 using Cx.Client.Data.DataObject;
 using Cx.Client.Managers;
 using Cx.Client.Security.Users.Data;
 using Cx.Client.Taxi.Billings.Data;
 using Cx.Client.Utils;
-using Cx.Client.Utils.Server;
 using WCFPlugin.Contract;
 
 namespace WCFPlugin.CxPlugin
@@ -19,8 +17,6 @@ namespace WCFPlugin.CxPlugin
         private IBillings _billings;
         private IUsers _users;
         private FileSystemWatcher _watcher;
-        private ClientBonusService _service;
-
 
         public override void OnInitialize()
         {
@@ -55,8 +51,8 @@ namespace WCFPlugin.CxPlugin
             serviceHost.Open();
 
             _watcher = new FileSystemWatcher(GlobalUtils.AppDirectory, PluginParams.FileName);
-            _watcher.NotifyFilter = NotifyFilters.LastWrite;
             _watcher.Changed += _watcher_Changed;
+            _watcher.NotifyFilter = NotifyFilters.LastWrite;
             _watcher.EnableRaisingEvents = true;
             GlobalLogManager.WriteString("WCFManager. Сервис запущен");
         }

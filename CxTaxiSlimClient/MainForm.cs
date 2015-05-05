@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 using CxTaxiSlimClient.CxTaxiService;
@@ -15,10 +16,6 @@ namespace CxTaxiSlimClient
 
         public MainForm()
         {
-            var host = "localhost";
-            var port = 23444;
-            var strAddress = string.Format("http://{0}:{1}/ClientBonusService/", host, port);
-            _service = new ClientBonusServiceClient("BasicHttpBinding_IClientBonusService", strAddress);
             InitializeComponent();
         }
 
@@ -32,6 +29,15 @@ namespace CxTaxiSlimClient
 
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (_loginInfo != null && _service != null)
+            {
+                _service.Logout(_loginInfo);
+            }
+            base.OnClosing(e);
+        }
+
         private void Login()
         {
             using (var loginForm = new LoginForm(_service))
@@ -39,10 +45,34 @@ namespace CxTaxiSlimClient
                 if (loginForm.ShowDialog(this) == DialogResult.OK)
                 {
                     _loginInfo = loginForm.GetLoginInfo();
+                    _service = loginForm.GetService();
+                    switch (_loginInfo.RoleType)
+                    {
+                        case RoleTypes.Payin:
+                            tsPayInBtn.Enabled = true;
+                            tsPayoutBtn.Enabled = false;
+                            break;
+                        case RoleTypes.Payout:
+                            tsPayInBtn.Enabled = false;
+                            tsPayoutBtn.Enabled = true;
+                            break;
+                        default:
+                            tsPayInBtn.Enabled = false;
+                            tsPayoutBtn.Enabled = false;
+                            break;
+                    }
+                }
+                else
+                {
+                    _loginInfo = null;
+                    _clientInfo = null;
+                    tsPayInBtn.Enabled = false;
+                    tsPayoutBtn.Enabled = false;
                 }
             }
 
             UpdateTitle();
+            UpdateInfo();
         }
 
         private void UpdateTitle()
@@ -60,6 +90,11 @@ namespace CxTaxiSlimClient
         }
 
         private void tsSearchBtn_Click(object sender, EventArgs e)
+        {
+            Search();
+        }
+
+        private void Search()
         {
             if (string.IsNullOrWhiteSpace(tsPhoneEdit.Text))
             {
@@ -80,6 +115,7 @@ namespace CxTaxiSlimClient
                     Resources.MainForm_SearchClient,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+                return;
             }
 
             var result = _service.GetClientByPhone(tsPhoneEdit.Text, _loginInfo);
@@ -90,15 +126,57 @@ namespace CxTaxiSlimClient
             else
             {
                 _clientInfo = null;
-                MessageBox.Show(
-                    this,
-                    result.Message,
-                    Resources.MainForm_SearchClient,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                if (_loginInfo.RoleType == RoleTypes.Payin && result.ErrorType == ErrorTypes.ClientNotFound)
+                {
+                    var messageResult = MessageBox.Show(
+                        this,
+                        string.Format("{0}\n{1}", result.Message, Resources.MainForm_AddNewClient),
+                        Resources.MainForm_SearchClient,
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (messageResult == DialogResult.Yes)
+                        CreateNewClient();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        this,
+                        result.Message,
+                        Resources.MainForm_SearchClient,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
 
             UpdateInfo();
+        }
+
+        private void CreateNewClient()
+        {
+            using (var createForm = new NewClientForm(tsPhoneEdit.Text))
+            {
+                if (createForm.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                var result = _service.CreateNewClient(createForm.GetPhone(), createForm.GetName(), _loginInfo);
+                if (result.IsSucssied)
+                {
+                    _clientInfo = result.Data;
+                }
+                else
+                {
+                    _clientInfo = null;
+                    MessageBox.Show(
+                        this,
+                        result.Message,
+                        Resources.NewClientForm_Title_NewClient,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+
+                UpdateInfo();
+            }
         }
 
         private void UpdateInfo()
@@ -109,6 +187,10 @@ namespace CxTaxiSlimClient
                 teBirthday.Text = null;
                 teBillingNumber.Text = null;
                 teBalance.Text = null;
+                teDiscount.Text = null;
+                teService.Text = null;
+                teOrdersDone.Text = null;
+                teOrdersCanceled.Text = null;
             }
             else
             {
@@ -118,6 +200,11 @@ namespace CxTaxiSlimClient
                     : "Не указано";
                 teBillingNumber.Text = _clientInfo.BillingAccountNumber;
                 teBalance.Text = _clientInfo.Balance.ToString(CultureInfo.InvariantCulture);
+
+                teDiscount.Text = _clientInfo.DefaultDiscountCardNumber;
+                teService.Text = _clientInfo.DefaultServiceName;
+                teOrdersDone.Text = (_clientInfo.OrdersCounter ?? 0).ToString();
+                teOrdersCanceled.Text = (_clientInfo.OrdersCanceled ?? 0).ToString();
             }
         }
 
@@ -153,6 +240,25 @@ namespace CxTaxiSlimClient
                     _clientInfo = operationForm.ClientInfo;
                     UpdateInfo();
                 }
+            }
+        }
+
+        private void tsPhoneEdit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '+' && e.KeyChar != 8)
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == '+' && !string.IsNullOrWhiteSpace(tsPhoneEdit.Text))
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == 13)
+            {
+                e.Handled = true;
+                Search();
             }
         }
     }

@@ -1,17 +1,16 @@
 ﻿using System;
 using System.ServiceModel;
-using System.ServiceModel.Description;
 using WCFPlugin;
 using WCFPlugin.Contract;
 using WCFPlugin.CxPlugin;
 
 namespace WCFSelfHost
 {
-    internal class Program
+    public class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
-            PluginParams.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
+            //PluginParams.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
 
             {
                 using (ServiceHost serviceHost = new ServiceHost(typeof (ClientBonusService)))
@@ -20,8 +19,8 @@ namespace WCFSelfHost
                     {
                         NetTcpBinding portsharingBinding = new NetTcpBinding();
                         BasicHttpBinding httpBinding = new BasicHttpBinding();
-                        serviceHost.AddServiceEndpoint(typeof(IClientBonusService), portsharingBinding, "net.tcp://localhost:23222/ClientBonusService");
-                        serviceHost.AddServiceEndpoint(typeof(IClientBonusService), httpBinding, "http://localhost:23444/ClientBonusService");
+                        serviceHost.AddServiceEndpoint(typeof(IClientBonusService), portsharingBinding, "net.tcp://192.168.1.5:23445/ClientBonusService");
+                        serviceHost.AddServiceEndpoint(typeof(IClientBonusService), httpBinding, "http://192.168.1.5:23444/ClientBonusService");
                         serviceHost.Open();
 
                         // The service can now be accessed.

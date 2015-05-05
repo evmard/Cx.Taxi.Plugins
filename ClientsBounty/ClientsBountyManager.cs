@@ -9,7 +9,6 @@ using Cx.Client.Taxi.Billings.Data;
 using Cx.Client.Taxi.Enums;
 using Cx.Client.Taxi.Orders.Data;
 using Cx.Client.Utils;
-using Cx.Client.Utils.Server;
 
 namespace Cx.Client.Taxi.ClientsBounty
 {

@@ -2,11 +2,12 @@
 <PluginParams xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <HostName>localhost</HostName>
   <Port>23444</Port>
-  <RoleId>1</RoleId>
+  <PayInRoleId>1000003000</PayInRoleId>
+  <PayOutRoleId>1000003000</PayOutRoleId>
   <PayinLogDescription>Зачисление суммы через WCFPlugin</PayinLogDescription>
   <PayinMessageTemplate>Ваш счет пополнен на сумму {0} руб.</PayinMessageTemplate>
   <NeedMakeCall>true</NeedMakeCall>
   <NeedSendSms>true</NeedSendSms>
-  <PayOutMessageTemplate>Списание суммы через WCFPlugin</PayOutMessageTemplate>
-  <PayOutLogDescription>С Вашего счета списано {0} руб.</PayOutLogDescription>
+  <PayOutMessageTemplate>С Вашего счета списано {0} руб.</PayOutMessageTemplate>
+  <PayOutLogDescription>Списание суммы через WCFPlugin</PayOutLogDescription>
 </PluginParams>

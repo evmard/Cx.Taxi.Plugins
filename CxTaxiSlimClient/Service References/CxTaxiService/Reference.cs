@@ -157,19 +157,16 @@ namespace CxTaxiSlimClient.CxTaxiService {
         DoesntLogined = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        AccsessDeny = 1,
+        ClientNotFound = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        ClientNotFound = 2,
+        NotInitialize = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        NotInitialize = 3,
+        LoginOrPassIsWrong = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        LoginOrPassIsWrong = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        UnkownError = 5,
+        UnkownError = 4,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

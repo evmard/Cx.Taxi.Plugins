@@ -1,11 +1,14 @@
-﻿namespace CxTaxiSlimClient
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace CxTaxiSlimClient
 {
     partial class BonusOperationsForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -47,7 +50,7 @@
             // 
             this.loTable.ColumnCount = 2;
             this.loTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.loTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.loTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.loTable.Controls.Add(this.teName, 1, 0);
             this.loTable.Controls.Add(this.lblName, 0, 0);
             this.loTable.Controls.Add(this.lblPhone, 0, 1);
@@ -68,7 +71,7 @@
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.loTable.Size = new System.Drawing.Size(376, 159);
+            this.loTable.Size = new System.Drawing.Size(344, 142);
             this.loTable.TabIndex = 0;
             // 
             // teName
@@ -78,7 +81,7 @@
             this.teName.Location = new System.Drawing.Point(140, 3);
             this.teName.Name = "teName";
             this.teName.ReadOnly = true;
-            this.teName.Size = new System.Drawing.Size(233, 20);
+            this.teName.Size = new System.Drawing.Size(201, 20);
             this.teName.TabIndex = 0;
             // 
             // lblName
@@ -127,7 +130,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tePhone.Location = new System.Drawing.Point(140, 29);
             this.tePhone.Name = "tePhone";
-            this.tePhone.Size = new System.Drawing.Size(233, 20);
+            this.tePhone.Size = new System.Drawing.Size(201, 20);
             this.tePhone.TabIndex = 5;
             // 
             // teCode
@@ -136,13 +139,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.teCode.Location = new System.Drawing.Point(140, 81);
             this.teCode.Name = "teCode";
-            this.teCode.Size = new System.Drawing.Size(233, 20);
+            this.teCode.Size = new System.Drawing.Size(201, 20);
             this.teCode.TabIndex = 7;
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCancel.Location = new System.Drawing.Point(3, 133);
+            this.btnCancel.Location = new System.Drawing.Point(3, 116);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 8;
@@ -153,7 +156,7 @@
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(259, 133);
+            this.btnOk.Location = new System.Drawing.Point(227, 116);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(114, 23);
             this.btnOk.TabIndex = 9;
@@ -172,16 +175,21 @@
             0,
             0});
             this.teSumm.Name = "teSumm";
-            this.teSumm.Size = new System.Drawing.Size(233, 20);
+            this.teSumm.Size = new System.Drawing.Size(201, 20);
             this.teSumm.TabIndex = 10;
             // 
             // BonusOperationsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(376, 159);
+            this.ClientSize = new System.Drawing.Size(344, 142);
             this.Controls.Add(this.loTable);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(360, 180);
             this.Name = "BonusOperationsForm";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "BonusOperationsForm";
             this.loTable.ResumeLayout(false);
             this.loTable.PerformLayout();
@@ -192,16 +200,16 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel loTable;
-        private System.Windows.Forms.TextBox teName;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.Label lblPhone;
-        private System.Windows.Forms.Label lblSumm;
-        private System.Windows.Forms.Label lblCode;
-        private System.Windows.Forms.TextBox tePhone;
-        private System.Windows.Forms.TextBox teCode;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.NumericUpDown teSumm;
+        private TableLayoutPanel loTable;
+        private TextBox teName;
+        private Label lblName;
+        private Label lblPhone;
+        private Label lblSumm;
+        private Label lblCode;
+        private TextBox tePhone;
+        private TextBox teCode;
+        private Button btnCancel;
+        private Button btnOk;
+        private NumericUpDown teSumm;
     }
 }

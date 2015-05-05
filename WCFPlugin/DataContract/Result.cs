@@ -8,7 +8,6 @@ namespace WCFPlugin.DataContract
         public const string LoginErrorMsg = "Не верный логин или пароль.";
         public const string NotInitedMsg = "Сервис не инициализирован.";
         public const string DoesntLoginedMsg = "Пользователь не залогирован в системе.";
-        public const string AccsessDenyMsg = "Вы не имеете прав на данную операцию.";
         public const string CodeErrorMsg = "Не верный код операции";
 
         public Result(bool isSucssied)
@@ -31,7 +30,6 @@ namespace WCFPlugin.DataContract
     public enum ErrorTypes
     {
         DoesntLogined,
-        AccsessDeny,
         ClientNotFound,
         NotInitialize,
         LoginOrPassIsWrong,

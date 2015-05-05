@@ -37,7 +37,6 @@
   <xs:simpleType name="ErrorTypes">
     <xs:restriction base="xs:string">
       <xs:enumeration value="DoesntLogined" />
-      <xs:enumeration value="AccsessDeny" />
       <xs:enumeration value="ClientNotFound" />
       <xs:enumeration value="NotInitialize" />
       <xs:enumeration value="LoginOrPassIsWrong" />
