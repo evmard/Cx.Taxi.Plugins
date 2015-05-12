@@ -83,6 +83,9 @@ namespace WCFPlugin.CxPlugin
             var messageTemplate = PluginParams.PayOutMessageTemplate;
             var logDescription = PluginParams.PayOutLogDescription;
 
+            if (client.Billing == null || (client.Billing.Balance ?? 0) < amount)
+                return false;
+
             DoPayments(-amount, client, logDescription, messageTemplate);
             clientInfo = new ClientInfo(client, _clientManager.GetDefaultPhone(clientId));
             return true;

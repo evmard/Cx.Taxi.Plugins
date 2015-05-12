@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using System.Windows.Forms;
 using CxTaxiSlimClient.CxTaxiService;
 using CxTaxiSlimClient.Properties;
@@ -58,7 +59,28 @@ namespace CxTaxiSlimClient
 
             RoleTypes roleType = cbRole.SelectedIndex == 0 ? RoleTypes.Payin : RoleTypes.Payout;
 
-            var result = await _service.LoginAsync(teLogin.Text, tePass.Text, roleType);
+            ResultOfLoginInfoxdEytY2q result;
+
+            try
+            {
+                result = await _service.LoginAsync(teLogin.Text, tePass.Text, roleType);
+            }
+            catch (EndpointNotFoundException)
+            {
+                result = new ResultOfLoginInfoxdEytY2q
+                {
+                    IsSucssied = false,
+                    Message = "Не удалось подключиться к серверу. Сервер не найден.\nПроверьте настройки подлючения"
+                };
+            }
+            catch (Exception exception)
+            {
+                result = new ResultOfLoginInfoxdEytY2q
+                {
+                    IsSucssied = false,
+                    Message = string.Format("Не удалось подключиться к серверу.\nОшибка: {0}", exception.Message)
+                };
+            }
 
             if (!result.IsSucssied)
             {

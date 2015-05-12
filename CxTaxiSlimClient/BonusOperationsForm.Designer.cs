@@ -38,12 +38,17 @@ namespace CxTaxiSlimClient
             this.lblSumm = new System.Windows.Forms.Label();
             this.lblCode = new System.Windows.Forms.Label();
             this.tePhone = new System.Windows.Forms.TextBox();
-            this.teCode = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.teSumm = new System.Windows.Forms.NumericUpDown();
+            this.gbSendMethod = new System.Windows.Forms.GroupBox();
+            this.rbSMS = new System.Windows.Forms.RadioButton();
+            this.rbCall = new System.Windows.Forms.RadioButton();
+            this.btnSendAgain = new System.Windows.Forms.Button();
+            this.teCode = new System.Windows.Forms.MaskedTextBox();
             this.loTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.teSumm)).BeginInit();
+            this.gbSendMethod.SuspendLayout();
             this.SuspendLayout();
             // 
             // loTable
@@ -57,21 +62,24 @@ namespace CxTaxiSlimClient
             this.loTable.Controls.Add(this.lblSumm, 0, 2);
             this.loTable.Controls.Add(this.lblCode, 0, 3);
             this.loTable.Controls.Add(this.tePhone, 1, 1);
-            this.loTable.Controls.Add(this.teCode, 1, 3);
-            this.loTable.Controls.Add(this.btnCancel, 0, 5);
-            this.loTable.Controls.Add(this.btnOk, 1, 5);
+            this.loTable.Controls.Add(this.btnCancel, 0, 6);
+            this.loTable.Controls.Add(this.btnOk, 1, 6);
             this.loTable.Controls.Add(this.teSumm, 1, 2);
+            this.loTable.Controls.Add(this.gbSendMethod, 0, 5);
+            this.loTable.Controls.Add(this.btnSendAgain, 1, 4);
+            this.loTable.Controls.Add(this.teCode, 1, 3);
             this.loTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.loTable.Location = new System.Drawing.Point(0, 0);
             this.loTable.Name = "loTable";
-            this.loTable.RowCount = 6;
+            this.loTable.RowCount = 7;
+            this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.loTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.loTable.Size = new System.Drawing.Size(344, 142);
+            this.loTable.Size = new System.Drawing.Size(344, 232);
             this.loTable.TabIndex = 0;
             // 
             // teName
@@ -133,19 +141,10 @@ namespace CxTaxiSlimClient
             this.tePhone.Size = new System.Drawing.Size(201, 20);
             this.tePhone.TabIndex = 5;
             // 
-            // teCode
-            // 
-            this.teCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.teCode.Location = new System.Drawing.Point(140, 81);
-            this.teCode.Name = "teCode";
-            this.teCode.Size = new System.Drawing.Size(201, 20);
-            this.teCode.TabIndex = 7;
-            // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCancel.Location = new System.Drawing.Point(3, 116);
+            this.btnCancel.Location = new System.Drawing.Point(3, 206);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 8;
@@ -156,7 +155,7 @@ namespace CxTaxiSlimClient
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(227, 116);
+            this.btnOk.Location = new System.Drawing.Point(227, 206);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(114, 23);
             this.btnOk.TabIndex = 9;
@@ -178,15 +177,75 @@ namespace CxTaxiSlimClient
             this.teSumm.Size = new System.Drawing.Size(201, 20);
             this.teSumm.TabIndex = 10;
             // 
+            // gbSendMethod
+            // 
+            this.loTable.SetColumnSpan(this.gbSendMethod, 2);
+            this.gbSendMethod.Controls.Add(this.rbCall);
+            this.gbSendMethod.Controls.Add(this.rbSMS);
+            this.gbSendMethod.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbSendMethod.Location = new System.Drawing.Point(3, 136);
+            this.gbSendMethod.Name = "gbSendMethod";
+            this.gbSendMethod.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.gbSendMethod.Size = new System.Drawing.Size(338, 64);
+            this.gbSendMethod.TabIndex = 11;
+            this.gbSendMethod.TabStop = false;
+            this.gbSendMethod.Text = "Способ отправки кода";
+            // 
+            // rbSMS
+            // 
+            this.rbSMS.AutoSize = true;
+            this.rbSMS.Checked = true;
+            this.rbSMS.Location = new System.Drawing.Point(7, 17);
+            this.rbSMS.Name = "rbSMS";
+            this.rbSMS.Size = new System.Drawing.Size(48, 17);
+            this.rbSMS.TabIndex = 0;
+            this.rbSMS.TabStop = true;
+            this.rbSMS.Text = "СМС";
+            this.rbSMS.UseVisualStyleBackColor = true;
+            this.rbSMS.CheckedChanged += new System.EventHandler(this.rbSMS_CheckedChanged);
+            // 
+            // rbCall
+            // 
+            this.rbCall.AutoSize = true;
+            this.rbCall.Location = new System.Drawing.Point(7, 41);
+            this.rbCall.Name = "rbCall";
+            this.rbCall.Size = new System.Drawing.Size(62, 17);
+            this.rbCall.TabIndex = 1;
+            this.rbCall.Text = "Звонок";
+            this.rbCall.UseVisualStyleBackColor = true;
+            this.rbCall.CheckedChanged += new System.EventHandler(this.rbCall_CheckedChanged);
+            // 
+            // btnSendAgain
+            // 
+            this.btnSendAgain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSendAgain.Location = new System.Drawing.Point(140, 107);
+            this.btnSendAgain.Name = "btnSendAgain";
+            this.btnSendAgain.Size = new System.Drawing.Size(201, 23);
+            this.btnSendAgain.TabIndex = 12;
+            this.btnSendAgain.Text = "Повторить отправку кода";
+            this.btnSendAgain.UseVisualStyleBackColor = true;
+            this.btnSendAgain.Click += new System.EventHandler(this.btnSendAgain_Click);
+            // 
+            // teCode
+            // 
+            this.teCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.teCode.Location = new System.Drawing.Point(140, 81);
+            this.teCode.Mask = "000";
+            this.teCode.Name = "teCode";
+            this.teCode.Size = new System.Drawing.Size(201, 20);
+            this.teCode.TabIndex = 13;
+            this.teCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // BonusOperationsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 142);
+            this.ClientSize = new System.Drawing.Size(344, 232);
             this.Controls.Add(this.loTable);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(360, 180);
+            this.MinimumSize = new System.Drawing.Size(360, 270);
             this.Name = "BonusOperationsForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -194,6 +253,8 @@ namespace CxTaxiSlimClient
             this.loTable.ResumeLayout(false);
             this.loTable.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.teSumm)).EndInit();
+            this.gbSendMethod.ResumeLayout(false);
+            this.gbSendMethod.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -207,9 +268,13 @@ namespace CxTaxiSlimClient
         private Label lblSumm;
         private Label lblCode;
         private TextBox tePhone;
-        private TextBox teCode;
         private Button btnCancel;
         private Button btnOk;
         private NumericUpDown teSumm;
+        private GroupBox gbSendMethod;
+        private RadioButton rbCall;
+        private RadioButton rbSMS;
+        private Button btnSendAgain;
+        private MaskedTextBox teCode;
     }
 }

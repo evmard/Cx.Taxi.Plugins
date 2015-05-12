@@ -18,6 +18,9 @@ namespace WCFPlugin.CxPlugin
         public string PayOutMessageTemplate { get; set; }
         public string PayOutLogDescription { get; set; }
 
+        public string PayInCodeNotification { get; set; }
+        public string PayOutCodeNotification { get; set; }
+
         public PluginParams()
         {
             HostName = "localhost";
@@ -30,6 +33,8 @@ namespace WCFPlugin.CxPlugin
             NeedSendSms = true;
             PayOutLogDescription = "Списание суммы через WCFPlugin";
             PayOutMessageTemplate = "С Вашего счета списано {0} руб.";
+            PayInCodeNotification = "Ваш код {0} для зачисления в размере {1}";
+            PayOutCodeNotification = "Ваш код {0} для списания в размере {1}";
         }
 
         public long GetRoleId(RoleTypes roleType)

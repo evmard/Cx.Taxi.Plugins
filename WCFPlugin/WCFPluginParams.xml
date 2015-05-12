@@ -10,4 +10,6 @@
   <NeedSendSms>true</NeedSendSms>
   <PayOutMessageTemplate>С Вашего счета списано {0} руб.</PayOutMessageTemplate>
   <PayOutLogDescription>Списание суммы через WCFPlugin</PayOutLogDescription>
+  <PayInCodeNotification>Ваш код {0} для зачисления в размере {1}</PayInCodeNotification>
+  <PayOutCodeNotification>Ваш код {0} для списания в размере {1}</PayOutCodeNotification>
 </PluginParams>

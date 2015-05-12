@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.ServiceModel;
 using System.Windows.Forms;
 using CxTaxiSlimClient.CxTaxiService;
 using CxTaxiSlimClient.Properties;
@@ -33,7 +34,16 @@ namespace CxTaxiSlimClient
         {
             if (_loginInfo != null && _service != null)
             {
-                _service.Logout(_loginInfo);
+                try
+                {
+                    _service.Logout(_loginInfo);
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch
+                {
+                    
+                }
+                
             }
             base.OnClosing(e);
         }
@@ -118,7 +128,28 @@ namespace CxTaxiSlimClient
                 return;
             }
 
-            var result = _service.GetClientByPhone(tsPhoneEdit.Text, _loginInfo);
+            ResultOfClientInfoxdEytY2q result;
+            try
+            {
+                result = _service.GetClientByPhone(tsPhoneEdit.Text, _loginInfo);
+            }
+            catch (EndpointNotFoundException)
+            {
+                result = new ResultOfClientInfoxdEytY2q
+                {
+                    IsSucssied = false,
+                    Message = "Не удалось подключиться к серверу. Сервер не найден.\nПроверьте настройки подлючения"
+                };
+            }
+            catch (Exception exception)
+            {
+                result = new ResultOfClientInfoxdEytY2q
+                {
+                    IsSucssied = false,
+                    Message = string.Format("Не удалось выполнить операцию.\nОшибка: {0}", exception.Message)
+                };
+            }
+            
             if (result.IsSucssied)
             {
                 _clientInfo = result.Data;
@@ -159,7 +190,28 @@ namespace CxTaxiSlimClient
                 if (createForm.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                var result = _service.CreateNewClient(createForm.GetPhone(), createForm.GetName(), _loginInfo);
+                ResultOfClientInfoxdEytY2q result;
+                try
+                {
+                    result = _service.CreateNewClient(createForm.GetPhone(), createForm.GetName(), _loginInfo);
+                }
+                catch (EndpointNotFoundException)
+                {
+                    result = new ResultOfClientInfoxdEytY2q
+                    {
+                        IsSucssied = false,
+                        Message = "Не удалось подключиться к серверу. Сервер не найден.\nПроверьте настройки подлючения"
+                    };
+                }
+                catch (Exception exception)
+                {
+                    result = new ResultOfClientInfoxdEytY2q
+                    {
+                        IsSucssied = false,
+                        Message = string.Format("Не удалось выполнить операцию.\nОшибка: {0}", exception.Message)
+                    };
+                }
+
                 if (result.IsSucssied)
                 {
                     _clientInfo = result.Data;
@@ -212,7 +264,13 @@ namespace CxTaxiSlimClient
         {
             if (_loginInfo != null)
             {
-                _service.Logout(_loginInfo);
+                try
+                {
+                    _service.Logout(_loginInfo);
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch { }
+
                 _loginInfo = null;
             }
 

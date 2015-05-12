@@ -14,8 +14,9 @@ namespace WCFPlugin
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, IncludeExceptionDetailInFaults = true)]
     public class ClientBonusService : IClientBonusService
     {
-        private readonly Dictionary<Guid, SessionInfo> _session = new Dictionary<Guid, SessionInfo>();
-        private readonly ReaderWriterLockSlim _sessionLockSlim = new ReaderWriterLockSlim();
+        private readonly Dictionary<Guid, SessionInfo> _sessions = new Dictionary<Guid, SessionInfo>();
+        private readonly Dictionary<string, SessionInfo> _sessionsByLogin = new Dictionary<string, SessionInfo>();
+        private readonly ReaderWriterLockSlim _sessionsLockSlim = new ReaderWriterLockSlim();
 
         private readonly Dictionary<long, OperationInfo> _payoutCodes = new Dictionary<long, OperationInfo>();
         private readonly Dictionary<long, OperationInfo> _payInCodes = new Dictionary<long, OperationInfo>();
@@ -81,9 +82,24 @@ namespace WCFPlugin
 
             ICxChildConnection connection;
             string errorMsg;
-            if (DataProvider.TryGetConnection(login, pass, Params.GetRoleId(roleType), out connection, out errorMsg) !=
-                LogonResult.OK)
+            var logonResult = DataProvider.TryGetConnection(login, pass, Params.GetRoleId(roleType), out connection, out errorMsg);
+            if (logonResult != LogonResult.OK)
             {
+                if (logonResult == LogonResult.AlreadyLogined)
+                {
+                    SessionInfo session;
+
+                    _sessionsLockSlim.EnterReadLock();
+                    var hasSession = _sessionsByLogin.TryGetValue(login, out session);
+                    _sessionsLockSlim.ExitReadLock();
+
+                    if (hasSession)
+                    {
+                        Logout(session.LoginInfo);
+                        return Login(login, pass, roleType);
+                    }
+                }
+
                 var result = Result<LoginInfo>.LoginOrPassIsWrong();
                 if (!string.IsNullOrWhiteSpace(errorMsg))
                 {
@@ -124,9 +140,10 @@ namespace WCFPlugin
                     break;
             }
 
-            _sessionLockSlim.EnterWriteLock();
-            _session.Add(loginInfo.SessionGuid, sessionInfo);
-            _sessionLockSlim.ExitWriteLock();
+            _sessionsLockSlim.EnterWriteLock();
+            _sessions.Add(loginInfo.SessionGuid, sessionInfo);
+            _sessionsByLogin.Add(sessionInfo.Connection.Login, sessionInfo);
+            _sessionsLockSlim.ExitWriteLock();
             
             return new Result<LoginInfo>(loginInfo);
         }
@@ -139,9 +156,10 @@ namespace WCFPlugin
 
             sessionInfo.Connection.Drop();
 
-            _sessionLockSlim.EnterWriteLock();
-            _session.Remove(loginInfo.SessionGuid);
-            _sessionLockSlim.ExitWriteLock();
+            _sessionsLockSlim.EnterWriteLock();
+            _sessions.Remove(loginInfo.SessionGuid);
+            _sessionsByLogin.Remove(sessionInfo.Connection.Login);
+            _sessionsLockSlim.ExitWriteLock();
         }
 
         public Result<ClientInfo> GetClientByPhone(string phone, LoginInfo loginInfo)
@@ -233,7 +251,7 @@ namespace WCFPlugin
                     return accsessDenyResult;
                 }
 
-                _payoutCodes.Remove(clientId);
+                _payInCodes.Remove(clientId);
             }
 
             ClientInfo clientInfo;
@@ -253,15 +271,28 @@ namespace WCFPlugin
             if (!session.CanDoPayIn)
                 return Result<Object>.AccsessDeny();
 
-            int code = _rng.Next(100, 1000);
-
+            OperationInfo info;
+            bool hasCode;
+            int code;
             lock (_payInCodes)
             {
-
-                _payInCodes[clientId] = new OperationInfo {Code = code, Summ = summ};
+                hasCode = _payInCodes.TryGetValue(clientId, out info);
             }
 
-            var codeMsg = string.Format("Ваш код {0} для зачисления в размере {1}", code, summ);
+            if (hasCode && Math.Abs(info.Summ - summ) < 1.0)
+            {
+                code = info.Code;
+            }
+            else
+            {
+                code = _rng.Next(100, 1000);
+                lock (_payInCodes)
+                {
+                    _payInCodes[clientId] = new OperationInfo { Code = code, Summ = summ };
+                }
+            }
+
+            var codeMsg = string.Format(_params.PayInCodeNotification, code, summ);
             DataProvider.SendCode(phone, codeMsg, sendMethod);
             return new Result(true);
         }
@@ -276,14 +307,28 @@ namespace WCFPlugin
             if (!session.CanDoPayout)
                 return Result<Object>.AccsessDeny();
 
-            int code = _rng.Next(100, 1000);
-
+            OperationInfo info;
+            bool hasCode;
+            int code;
             lock (_payoutCodes)
             {
-                _payoutCodes[clientId] = new OperationInfo {Code = code, Summ = summ};
+                hasCode = _payoutCodes.TryGetValue(clientId, out info);
             }
 
-            var codeMsg = string.Format("Ваш код {0} для списания в размере {1}", code, summ);
+            if (hasCode && Math.Abs(info.Summ - summ) < 1.0)
+            {
+                code = info.Code;
+            }
+            else
+            {
+                code = _rng.Next(100, 1000);
+                lock (_payoutCodes)
+                {
+                    _payoutCodes[clientId] = new OperationInfo { Code = code, Summ = summ };
+                }
+            }
+
+            var codeMsg = string.Format(_params.PayOutCodeNotification, code, summ);
             DataProvider.SendCode(phone, codeMsg, sendMethod);
             return new Result(true);
         }
@@ -291,9 +336,9 @@ namespace WCFPlugin
         private SessionInfo GetSession(LoginInfo loginInfo)
         {
             SessionInfo sessionInfo;
-            _sessionLockSlim.EnterReadLock();
-            bool hasSession = _session.TryGetValue(loginInfo.SessionGuid, out sessionInfo);
-            _sessionLockSlim.ExitReadLock();
+            _sessionsLockSlim.EnterReadLock();
+            bool hasSession = _sessions.TryGetValue(loginInfo.SessionGuid, out sessionInfo);
+            _sessionsLockSlim.ExitReadLock();
 
             if (!hasSession)
                 return null;

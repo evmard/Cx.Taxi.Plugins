@@ -10,7 +10,7 @@ namespace WCFSelfHost
     {
         private static void Main()
         {
-            //PluginParams.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
+            PluginParams.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
 
             {
                 using (ServiceHost serviceHost = new ServiceHost(typeof (ClientBonusService)))
