@@ -92,7 +92,7 @@ namespace Cx.Client.Taxi.ClientsBounty
 
           var order = e.Object;
           if (order.State == Enums.OrderStates.Paid &&                //Заказ оплачен
-              order.IDService == param.IDService &&            //с указанной услугой
+              param.IdsServices.Contains(order.IDService ?? 0) &&     //с указанной услугой
               order.Cost.HasValue && order.Cost.Value > 0.0 &&  //и не нулевой стоимостью
               order.Client != null) 
           {

@@ -1,22 +1,12 @@
 <?xml version="1.0"?>
 <PluginParams xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  
-  <!--- Идентификатор услуги -->
-  <IDService>5252428308</IDService>
-  
-  <!--- Процент от стоимости заказа -->
+  <IDService>
+    <long>5252428308</long>
+    <long>123456789</long>
+  </IDService>
   <Procent>0.025</Procent>
-  
-  <!--- Строка описания для записи в лог операций со счетом -->
   <BountyDescription>Вознаграждение за заказ.</BountyDescription>
-  
-  <!--- Строка для оповещения клиента -->
   <MessageTemplate>На Ваш счет начислено {0} рублей.</MessageTemplate>
-  
-  <!--- Указывает необходимость оповещать клиента через автоинформатор (true, false) -->
   <NeedMakeCall>true</NeedMakeCall>
-  
-  <!--- Указывает необходимость оповещать клиента с помощью СМС (true, false) -->
   <NeedSendSMS>true</NeedSendSMS>
-  
 </PluginParams>

@@ -10,6 +10,7 @@ namespace WCFSelfHost
     {
         private static void Main()
         {
+            Cx.Client.Taxi.ClientsBounty.PluginParams.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
             PluginParams.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
 
             {

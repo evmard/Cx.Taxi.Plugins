@@ -49,6 +49,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClientsBounty.csproj">
+      <Project>{959aa933-0380-4ebe-b092-8e529d641b9f}</Project>
+      <Name>ClientsBounty</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WCFPlugin\WCFPlugin.csproj">
       <Project>{1D991681-F10D-4E39-A4D4-412F5DCD663D}</Project>
       <Name>WCFPlugin</Name>
