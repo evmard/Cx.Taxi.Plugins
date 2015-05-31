@@ -1,12 +1,16 @@
 <?xml version="1.0"?>
 <PluginParams xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <IDService>
+  <IdsServices>
     <long>5252428308</long>
     <long>123456789</long>
-  </IDService>
+  </IdsServices>
   <Procent>0.025</Procent>
   <BountyDescription>Вознаграждение за заказ.</BountyDescription>
   <MessageTemplate>На Ваш счет начислено {0} рублей.</MessageTemplate>
   <NeedMakeCall>true</NeedMakeCall>
   <NeedSendSMS>true</NeedSendSMS>
+  <BalanceNotifySumm>10000</BalanceNotifySumm>
+  <NeedMakeBalanceNotifyCall>false</NeedMakeBalanceNotifyCall>
+  <NeedSendBalanceNotifySMS>false</NeedSendBalanceNotifySMS>
+  <BalanceNotifyMessage>Поздравляем! На вашем счету более 10000 руб.</BalanceNotifyMessage>
 </PluginParams>

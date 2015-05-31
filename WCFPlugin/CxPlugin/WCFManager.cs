@@ -42,6 +42,7 @@ namespace WCFPlugin.CxPlugin
             var serviceHost = new ServiceHost(typeof (ClientBonusService));
             GlobalLogManager.WriteString("WCFManager. Установка параметров");
             ClientBonusService.DataProvider = new CxDataProvider(_param, _billings, _users);
+            ClientBonusService.LogonManager = new LogonManager(GlobalUtils.AppDirectory);
             ClientBonusService.Params = _param;
             var portsharingBinding = new NetTcpBinding();
             var httpBinding = new BasicHttpBinding();

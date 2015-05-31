@@ -13,6 +13,11 @@ namespace Cx.Client.Taxi.ClientsBounty
         public bool NeedMakeCall { get; set; }
         public bool NeedSendSMS { get; set; }
 
+        public double BalanceNotifySumm { get; set; }
+        public bool NeedMakeBalanceNotifyCall { get; set; }
+        public bool NeedSendBalanceNotifySMS { get; set; }
+        public string BalanceNotifyMessage { get; set; }
+
         public PluginParams()
         {
             IdsServices = new List<long> { 5252428308, 123456789 };
@@ -21,6 +26,10 @@ namespace Cx.Client.Taxi.ClientsBounty
             MessageTemplate = "На Ваш счет начислено {0} рублей.";
             NeedMakeCall = true;
             NeedSendSMS = true;
+            BalanceNotifySumm = 10000;
+            NeedMakeBalanceNotifyCall = false;
+            NeedSendBalanceNotifySMS = false;
+            BalanceNotifyMessage = "Поздравляем! На вашем счету более 10000 руб.";
         }
 
         public PluginParams(PluginParams other)
@@ -31,6 +40,10 @@ namespace Cx.Client.Taxi.ClientsBounty
             MessageTemplate = other.MessageTemplate;
             NeedMakeCall = other.NeedMakeCall;
             NeedSendSMS = other.NeedSendSMS;
+            BalanceNotifySumm = other.BalanceNotifySumm;
+            NeedMakeBalanceNotifyCall = other.NeedMakeBalanceNotifyCall;
+            NeedSendBalanceNotifySMS = other.NeedSendBalanceNotifySMS;
+            BalanceNotifyMessage = other.BalanceNotifyMessage;
         }
 
         public static void CreateFile(string path)

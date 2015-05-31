@@ -36,9 +36,8 @@ namespace CxTaxiSlimClient
             {
                 try
                 {
-                    _service.Logout(_loginInfo);
+                    _service.Logout(_loginInfo.SessionGuid);
                 }
-                // ReSharper disable once EmptyGeneralCatchClause
                 catch
                 {
                     
@@ -61,14 +60,26 @@ namespace CxTaxiSlimClient
                         case RoleTypes.Payin:
                             tsPayInBtn.Enabled = true;
                             tsPayoutBtn.Enabled = false;
+                            tsUserControl.Enabled = false;
+                            tsUserControl.Visible = false;
                             break;
                         case RoleTypes.Payout:
                             tsPayInBtn.Enabled = false;
                             tsPayoutBtn.Enabled = true;
+                            tsUserControl.Enabled = false;
+                            tsUserControl.Visible = false;
+                            break;
+                        case RoleTypes.Admin:
+                            tsPayInBtn.Enabled = true;
+                            tsPayoutBtn.Enabled = true;
+                            tsUserControl.Enabled = true;
+                            tsUserControl.Visible = true;
                             break;
                         default:
                             tsPayInBtn.Enabled = false;
                             tsPayoutBtn.Enabled = false;
+                            tsUserControl.Enabled = false;
+                            tsUserControl.Visible = false;
                             break;
                     }
                 }
@@ -78,6 +89,8 @@ namespace CxTaxiSlimClient
                     _clientInfo = null;
                     tsPayInBtn.Enabled = false;
                     tsPayoutBtn.Enabled = false;
+                    tsUserControl.Enabled = false;
+                    tsUserControl.Visible = false;
                 }
             }
 
@@ -131,7 +144,7 @@ namespace CxTaxiSlimClient
             ResultOfClientInfoxdEytY2q result;
             try
             {
-                result = _service.GetClientByPhone(tsPhoneEdit.Text, _loginInfo);
+                result = _service.GetClientByPhone(tsPhoneEdit.Text, _loginInfo.SessionGuid);
             }
             catch (EndpointNotFoundException)
             {
@@ -193,7 +206,7 @@ namespace CxTaxiSlimClient
                 ResultOfClientInfoxdEytY2q result;
                 try
                 {
-                    result = _service.CreateNewClient(createForm.GetPhone(), createForm.GetName(), _loginInfo);
+                    result = _service.CreateNewClient(createForm.GetPhone(), createForm.GetName(), _loginInfo.SessionGuid);
                 }
                 catch (EndpointNotFoundException)
                 {
@@ -258,6 +271,17 @@ namespace CxTaxiSlimClient
                 teOrdersDone.Text = (_clientInfo.OrdersCounter ?? 0).ToString();
                 teOrdersCanceled.Text = (_clientInfo.OrdersCanceled ?? 0).ToString();
             }
+
+            if (_loginInfo != null && _loginInfo.RoleType == RoleTypes.Payout)
+            {
+                teBalance.Visible = true;
+                lblBalance.Visible = true;
+            }
+            else
+            {
+                teBalance.Visible = false;
+                lblBalance.Visible = false;
+            }
         }
 
         private void tsRelogin_Click(object sender, EventArgs e)
@@ -266,7 +290,7 @@ namespace CxTaxiSlimClient
             {
                 try
                 {
-                    _service.Logout(_loginInfo);
+                    _service.Logout(_loginInfo.SessionGuid);
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch { }
@@ -279,6 +303,9 @@ namespace CxTaxiSlimClient
 
         private void tsPayInBtn_Click(object sender, EventArgs e)
         {
+            if (_clientInfo == null)
+                return;
+
             using (var operationForm = new BonusOperationsForm(_clientInfo, _service, OperationType.PayIn, _loginInfo))
             {
                 if (operationForm.ShowDialog(this) == DialogResult.OK)
@@ -291,6 +318,9 @@ namespace CxTaxiSlimClient
 
         private void tsPayoutBtn_Click(object sender, EventArgs e)
         {
+            if (_clientInfo == null)
+                return;
+
             using (var operationForm = new BonusOperationsForm(_clientInfo, _service, OperationType.PayOut, _loginInfo))
             {
                 if (operationForm.ShowDialog(this) == DialogResult.OK)
@@ -317,6 +347,14 @@ namespace CxTaxiSlimClient
             {
                 e.Handled = true;
                 Search();
+            }
+        }
+
+        private void tsUserControl_Click(object sender, EventArgs e)
+        {
+            using (var userControlForm = new UserControlForm(_service, _loginInfo))
+            {
+                userControlForm.ShowDialog(this);
             }
         }
     }

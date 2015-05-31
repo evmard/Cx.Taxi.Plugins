@@ -14,10 +14,6 @@ namespace WCFPlugin
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, IncludeExceptionDetailInFaults = true)]
     public class ClientBonusService : IClientBonusService
     {
-        private readonly Dictionary<Guid, SessionInfo> _sessions = new Dictionary<Guid, SessionInfo>();
-        private readonly Dictionary<string, SessionInfo> _sessionsByLogin = new Dictionary<string, SessionInfo>();
-        private readonly ReaderWriterLockSlim _sessionsLockSlim = new ReaderWriterLockSlim();
-
         private readonly Dictionary<long, OperationInfo> _payoutCodes = new Dictionary<long, OperationInfo>();
         private readonly Dictionary<long, OperationInfo> _payInCodes = new Dictionary<long, OperationInfo>();
 
@@ -75,98 +71,61 @@ namespace WCFPlugin
             }
         }
 
-        public Result<LoginInfo> Login(string login, string pass, RoleTypes roleType)
+        private static ILogonManager _logonManager;
+        private static readonly Object LogonManagerLock = new object();
+        public static ILogonManager LogonManager
         {
-            if (DataProvider == null)
-                return Result<LoginInfo>.NotInitialized();
-
-            ICxChildConnection connection;
-            string errorMsg;
-            var logonResult = DataProvider.TryGetConnection(login, pass, Params.GetRoleId(roleType), out connection, out errorMsg);
-            if (logonResult != LogonResult.OK)
+            get
             {
-                if (logonResult == LogonResult.AlreadyLogined)
+                lock (LogonManagerLock)
                 {
-                    SessionInfo session;
-
-                    _sessionsLockSlim.EnterReadLock();
-                    var hasSession = _sessionsByLogin.TryGetValue(login, out session);
-                    _sessionsLockSlim.ExitReadLock();
-
-                    if (hasSession)
+                    if (_logonManager == null)
                     {
-                        Logout(session.LoginInfo);
-                        return Login(login, pass, roleType);
+                        _logonManager = new LogonManager(AppDomain.CurrentDomain.BaseDirectory);
                     }
                 }
 
-                var result = Result<LoginInfo>.LoginOrPassIsWrong();
-                if (!string.IsNullOrWhiteSpace(errorMsg))
+                return _logonManager;
+            }
+            set
+            {
+                lock (LogonManagerLock)
                 {
-                    result.Message = errorMsg;
+                    _logonManager = value;
                 }
-                return result;
             }
+        }
 
-            var loginInfo = new LoginInfo()
-            {
-                SessionGuid = Guid.NewGuid(),
-                UserName = DataProvider.GetUserName(connection.IDUser),
-                RoleType = roleType
-            };
-
-            var sessionInfo = new SessionInfo
-            {
-                LoginInfo = loginInfo,
-                Connection = connection
-            };
-
-            switch (roleType)
-            {
-                case RoleTypes.Payin:
-                    sessionInfo.CanDoPayIn = true;
-                    sessionInfo.CanCreateNewClients = true;
-                    sessionInfo.CanDoPayout = false;
-                    break;
-                case RoleTypes.Payout:
-                    sessionInfo.CanDoPayIn = false;
-                    sessionInfo.CanCreateNewClients = false;
-                    sessionInfo.CanDoPayout = true;
-                    break;
+        public Result<LoginInfo> Login(string login, string pass, RoleTypes roleType)
+        {
+            SessionInfo sessionInfo;
+            var logonResult = LogonManager.Login(login, pass, roleType, out sessionInfo);
+            switch (logonResult)
+            { 
+                case LogonResult.Ok:
+                    return new Result<LoginInfo>(sessionInfo.GetLoginInfo());
+                case LogonResult.AlreadyLogined:
+                    LogonManager.Logout(sessionInfo.Guid);
+                    return Login(login, pass, roleType);
+                case LogonResult.WrongLoginOrPass:
+                    return new Result<LoginInfo>(Result.LoginOrPassIsWrong());
+                case LogonResult.WrongRole:
+                    return new Result<LoginInfo>(Result.AccsessDeny());
                 default:
-                    sessionInfo.CanDoPayIn = false;
-                    sessionInfo.CanCreateNewClients = false;
-                    sessionInfo.CanDoPayout = false;
-                    break;
+                    return new Result<LoginInfo>(false) { Message = "Ошибка: Не известный результат идентификации" };
             }
-
-            _sessionsLockSlim.EnterWriteLock();
-            _sessions.Add(loginInfo.SessionGuid, sessionInfo);
-            _sessionsByLogin.Add(sessionInfo.Connection.Login, sessionInfo);
-            _sessionsLockSlim.ExitWriteLock();
-            
-            return new Result<LoginInfo>(loginInfo);
         }
 
-        public void Logout(LoginInfo loginInfo)
+        public void Logout(Guid guid)
         {
-            var sessionInfo = GetSession(loginInfo);
-            if (sessionInfo == null)
-                return;
-
-            sessionInfo.Connection.Drop();
-
-            _sessionsLockSlim.EnterWriteLock();
-            _sessions.Remove(loginInfo.SessionGuid);
-            _sessionsByLogin.Remove(sessionInfo.Connection.Login);
-            _sessionsLockSlim.ExitWriteLock();
+            LogonManager.Logout(guid);
         }
 
-        public Result<ClientInfo> GetClientByPhone(string phone, LoginInfo loginInfo)
+        public Result<ClientInfo> GetClientByPhone(string phone, Guid guid)
         {
-            var result = CheckLoginAndDataProvider(loginInfo);
+            var result = CheckLoginAndDataProvider(guid, Operations.GetClientByPhone);
             if (!result.IsSucssied)
-                return result;
+                return new Result<ClientInfo>(result);
 
             IClient client = DataProvider.GetClient(phone);
             if (client == null)
@@ -182,15 +141,11 @@ namespace WCFPlugin
             return new Result<ClientInfo>(clientInfo);
         }
 
-        public Result<ClientInfo> CreateNewClient(string phone, string name, LoginInfo loginInfo)
+        public Result<ClientInfo> CreateNewClient(string phone, string name, Guid guid)
         {
-            var result = CheckLoginAndDataProvider(loginInfo);
+            var result = CheckLoginAndDataProvider(guid, Operations.CreateNewClient);
             if (!result.IsSucssied)
-                return result;
-
-            var session = GetSession(loginInfo);
-            if (!session.CanCreateNewClients)
-                return Result<ClientInfo>.AccsessDeny();
+                return new Result<ClientInfo>(result);
 
             IClient client = DataProvider.CreateNewClient(phone, name);
             if (client == null)
@@ -202,24 +157,20 @@ namespace WCFPlugin
             return new Result<ClientInfo>(clientInfo);
         }
 
-        public Result<ClientInfo> PayoutFromAccount(long clientId, int operationCode, LoginInfo loginInfo)
+        public Result<ClientInfo> PayoutFromAccount(long clientId, int operationCode, Guid guid)
         {
-            var result = CheckLoginAndDataProvider(loginInfo);
+            var result = CheckLoginAndDataProvider(guid, Operations.PayoutFromAccount);
             if (!result.IsSucssied)
-                return result;
-
-            var session = GetSession(loginInfo);
-            if (!session.CanDoPayout)
-                return Result<ClientInfo>.AccsessDeny();
+                return new Result<ClientInfo>(result);
 
             OperationInfo operationInfo;
             lock (_payoutCodes)
             {
                 if (!_payoutCodes.TryGetValue(clientId, out operationInfo) || operationInfo.Code != operationCode)
                 {
-                    var accsessDenyResult = Result<ClientInfo>.AccsessDeny();
+                    var accsessDenyResult = Result.AccsessDeny();
                     accsessDenyResult.Message = Result.CodeErrorMsg;
-                    return accsessDenyResult;
+                    return new Result<ClientInfo>(accsessDenyResult);
                 }
 
                 _payoutCodes.Remove(clientId);
@@ -231,24 +182,20 @@ namespace WCFPlugin
             return new Result<ClientInfo>(clientInfo);
         }
 
-        public Result<ClientInfo> PayInToAccount(long clientId, int operationCode, LoginInfo loginInfo)
+        public Result<ClientInfo> PayInToAccount(long clientId, int operationCode, Guid guid)
         {
-            var result = CheckLoginAndDataProvider(loginInfo);
+            var result = CheckLoginAndDataProvider(guid, Operations.PayInToAccount);
             if (!result.IsSucssied)
-                return result;
-
-            var session = GetSession(loginInfo);
-            if (!session.CanDoPayIn)
-                return Result<ClientInfo>.AccsessDeny();
+                return new Result<ClientInfo>(result);
 
             OperationInfo operationInfo;
             lock (_payInCodes)
             {
                 if (!_payInCodes.TryGetValue(clientId, out operationInfo) || operationInfo.Code != operationCode)
                 {
-                    var accsessDenyResult = Result<ClientInfo>.AccsessDeny();
+                    var accsessDenyResult = Result.AccsessDeny();
                     accsessDenyResult.Message = Result.CodeErrorMsg;
-                    return accsessDenyResult;
+                    return new Result<ClientInfo>(accsessDenyResult);
                 }
 
                 _payInCodes.Remove(clientId);
@@ -261,15 +208,11 @@ namespace WCFPlugin
             return new Result<ClientInfo>(clientInfo);
         }
 
-        public Result SendPayinCode(long clientId, string phone, double summ, SendMethod sendMethod, LoginInfo loginInfo)
+        public Result SendPayinCode(long clientId, string phone, double summ, SendMethod sendMethod, Guid guid)
         {
-            var result = CheckLoginAndDataProvider(loginInfo);
+            var result = CheckLoginAndDataProvider(guid, Operations.SendPayinCode);
             if (!result.IsSucssied)
-                return result;
-
-            var session = GetSession(loginInfo);
-            if (!session.CanDoPayIn)
-                return Result<Object>.AccsessDeny();
+                return new Result<ClientInfo>(result);
 
             OperationInfo info;
             bool hasCode;
@@ -292,20 +235,16 @@ namespace WCFPlugin
                 }
             }
 
-            var codeMsg = string.Format(_params.PayInCodeNotification, code, summ);
+            var codeMsg = string.Format(Params.PayInCodeNotification, code, summ);
             DataProvider.SendCode(phone, codeMsg, sendMethod);
             return new Result(true);
         }
 
-        public Result SendPayoutCode(long clientId, string phone, double summ, SendMethod sendMethod, LoginInfo loginInfo)
+        public Result SendPayoutCode(long clientId, string phone, double summ, SendMethod sendMethod, Guid guid)
         {
-            var result = CheckLoginAndDataProvider(loginInfo);
+            var result = CheckLoginAndDataProvider(guid, Operations.SendPayoutCode);
             if (!result.IsSucssied)
-                return result;
-
-            var session = GetSession(loginInfo);
-            if (!session.CanDoPayout)
-                return Result<Object>.AccsessDeny();
+                return new Result<ClientInfo>(result);
 
             OperationInfo info;
             bool hasCode;
@@ -328,34 +267,91 @@ namespace WCFPlugin
                 }
             }
 
-            var codeMsg = string.Format(_params.PayOutCodeNotification, code, summ);
+            var codeMsg = string.Format(Params.PayOutCodeNotification, code, summ);
             DataProvider.SendCode(phone, codeMsg, sendMethod);
             return new Result(true);
         }
 
-        private SessionInfo GetSession(LoginInfo loginInfo)
+        public Result<IEnumerable<UserInfo>> GetUsersList(Guid sessionGuid)
         {
-            SessionInfo sessionInfo;
-            _sessionsLockSlim.EnterReadLock();
-            bool hasSession = _sessions.TryGetValue(loginInfo.SessionGuid, out sessionInfo);
-            _sessionsLockSlim.ExitReadLock();
+            var result = CheckLoginAndDataProvider(sessionGuid, Operations.GetUsersList);
+            if (!result.IsSucssied)
+                return new Result<IEnumerable<UserInfo>>(result);
 
-            if (!hasSession)
-                return null;
-
-            return sessionInfo;
+            return new Result<IEnumerable<UserInfo>>(_logonManager.GetUsersList());
         }
 
-        private Result<ClientInfo> CheckLoginAndDataProvider(LoginInfo loginInfo)
+        public Result CreateUser(UserParam user, Guid sessionGuid)
         {
-            SessionInfo session = GetSession(loginInfo);
-            if (session == null)
-                return Result<ClientInfo>.DoesntLogined();
+            var result = CheckLoginAndDataProvider(sessionGuid, Operations.CreateUser);
+            if (!result.IsSucssied)
+                return result;
 
+            if (_logonManager.AddNewLogin(user))
+                return new Result(true);
+            else
+                return new Result(false) { Message = "Не удалось добавить нового пользователя"};
+        }
+
+        public Result<UserParam> GetUser(string userLogin, Guid sessionGuid)
+        {
+            var result = CheckLoginAndDataProvider(sessionGuid, Operations.GetUsersList);
+            if (!result.IsSucssied)
+                return new Result<UserParam>(result);
+
+            var user = _logonManager.GetUserParam(userLogin);
+            if (user != null)
+                return new Result<UserParam>(user);
+            else
+                return new Result<UserParam>(false) { Message = "Пользователь не найден"};
+        }
+
+        public Result UpdateUser(UserParam user, Guid sessionGuid)
+        {
+            var result = CheckLoginAndDataProvider(sessionGuid, Operations.UpdateUser);
+            if (!result.IsSucssied)
+                return result;
+
+            return new Result(_logonManager.EditLogin(user));
+        }
+
+        public Result RemoveUser(string userLogin, Guid sessionGuid)
+        {
+            var result = CheckLoginAndDataProvider(sessionGuid, Operations.RemoveUser);
+            if (!result.IsSucssied)
+                return result;
+
+            return new Result(_logonManager.RemoveLogin(userLogin));
+        }
+
+        public Result ChangeAdminPass(string newPass, Guid sessionGuid)
+        {
+            var result = CheckLoginAndDataProvider(sessionGuid, Operations.ChangeAdminPass);
+            if (!result.IsSucssied)
+                return result;
+
+            return new Result(_logonManager.ChangeAdminPass(newPass));
+        }
+
+        private Result CheckLoginAndDataProvider(Guid guid, Operations operation)
+        {
             if (DataProvider == null)
-                return Result<ClientInfo>.NotInitialized();
+                return Result.NotInitialized();
 
-            return new Result<ClientInfo>(true);
+            var permitionResult = LogonManager.CheckPermission(guid, operation);
+
+            switch (permitionResult)
+            { 
+                case PermissionResult.Ok:
+                    return new Result(true);
+                case PermissionResult.AccessDeny:
+                    return Result.AccsessDeny();
+                case PermissionResult.DoesntLogined:
+                    return Result.DoesntLogined();
+                default:
+                    var message = string.Format("Не известный результат операции проверки доступа Result = {0}", permitionResult);
+                    return new Result(false) { Message = message };
+            }
         }
     }
 

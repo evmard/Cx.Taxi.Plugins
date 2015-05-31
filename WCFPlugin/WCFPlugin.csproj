@@ -105,6 +105,11 @@
     <Compile Include="Contract\IClientBonusService.cs" />
     <Compile Include="CxPlugin\ICxDataProvider.cs" />
     <Compile Include="DataContract\LoginInfo.cs" />
+    <Compile Include="DataContract\UserInfo.cs" />
+    <Compile Include="ILogonManager.cs" />
+    <Compile Include="DataContract\UserParam.cs" />
+    <Compile Include="LoginsProvider.cs" />
+    <Compile Include="LogonManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClientBonusService.cs" />
     <Compile Include="DataContract\Result.cs" />

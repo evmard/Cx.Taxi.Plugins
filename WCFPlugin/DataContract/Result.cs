@@ -9,12 +9,20 @@ namespace WCFPlugin.DataContract
         public const string NotInitedMsg = "Сервис не инициализирован.";
         public const string DoesntLoginedMsg = "Пользователь не залогирован в системе.";
         public const string CodeErrorMsg = "Не верный код операции";
+        public const string AccessDenyMsg = "Функция не доступна для данного пользователя";
 
         public Result(bool isSucssied)
         {
             IsSucssied = isSucssied;
             if (!IsSucssied)
                 ErrorType = ErrorTypes.UnkownError;
+        }
+
+        public Result(Result other)
+        {
+            IsSucssied = other.IsSucssied;
+            ErrorType = other.ErrorType;
+            Message = other.Message;
         }
 
         [DataMember]
@@ -25,6 +33,42 @@ namespace WCFPlugin.DataContract
 
         [DataMember]
         public string Message { get; set; }
+
+        public static Result NotInitialized()
+        {
+            return new Result(false)
+            {
+                Message = NotInitedMsg,
+                ErrorType = ErrorTypes.NotInitialize
+            };
+        }
+
+        public static Result LoginOrPassIsWrong()
+        {
+            return new Result(false)
+            {
+                Message = LoginErrorMsg,
+                ErrorType = ErrorTypes.LoginOrPassIsWrong
+            };
+        }
+
+        public static Result DoesntLogined()
+        {
+            return new Result(false)
+            {
+                Message = DoesntLoginedMsg,
+                ErrorType = ErrorTypes.DoesntLogined
+            };
+        }
+
+        public static Result AccsessDeny()
+        {
+            return new Result(false)
+            {
+                Message = AccessDenyMsg,
+                ErrorType = ErrorTypes.LoginOrPassIsWrong
+            };
+        }
     }
 
     public enum ErrorTypes
@@ -49,43 +93,11 @@ namespace WCFPlugin.DataContract
             Data = data;
         }
 
+        public Result(Result other) : base(other)
+        { 
+        }
+
         [DataMember]
         public TData Data { get; set; }
-
-        public static Result<TData> NotInitialized()
-        {
-            return new Result<TData>(false)
-            {
-                Message = NotInitedMsg,
-                ErrorType = ErrorTypes.NotInitialize
-            };
-        }
-
-        public static Result<TData> LoginOrPassIsWrong()
-        {
-            return new Result<TData>(false)
-            {
-                Message = LoginErrorMsg,
-                ErrorType = ErrorTypes.LoginOrPassIsWrong
-            };
-        }
-
-        public static Result<TData> DoesntLogined()
-        {
-            return new Result<TData>(false)
-            {
-                Message = DoesntLoginedMsg,
-                ErrorType = ErrorTypes.DoesntLogined
-            };
-        }
-
-        public static Result<TData> AccsessDeny()
-        {
-            return new Result<TData>(false)
-            {
-                Message = DoesntLoginedMsg,
-                ErrorType = ErrorTypes.DoesntLogined
-            };
-        }
     }
 }

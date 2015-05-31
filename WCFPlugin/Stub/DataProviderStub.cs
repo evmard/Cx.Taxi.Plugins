@@ -25,18 +25,6 @@ namespace WCFPlugin.Stub
             _clientsById.Add(defaultClient.ID, defaultClient);
         }
 
-        public LogonResult TryGetConnection(string login, string pass, long roleId, out ICxChildConnection connection, out string errorMsg)
-        {
-            errorMsg = string.Empty;
-            connection = null;
-            const string admin = "admin";
-            if (!admin.Equals(login) || !admin.Equals(pass))
-                return LogonResult.AccessDenied;
-
-            connection = new ConnectionStub();
-            return LogonResult.OK;
-        }
-
         public IClient GetClient(string phone)
         {
             IClient client;
@@ -81,11 +69,6 @@ namespace WCFPlugin.Stub
 
             clientInfo = new ClientInfo(clientStub, ((ClientStub)clientStub).Phone);
             return true;
-        }
-
-        public string GetUserName(long userId)
-        {
-            return userId == 1 ? "Avershin A." : "Unknown";
         }
 
         public void SendCode(string phone, string text, SendMethod sendMethod)

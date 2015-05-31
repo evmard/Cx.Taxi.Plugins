@@ -6,6 +6,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Payin" />
       <xs:enumeration value="Payout" />
+      <xs:enumeration value="Admin" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="RoleTypes" nillable="true" type="tns:RoleTypes" />
@@ -46,6 +47,7 @@
   <xs:element name="ErrorTypes" nillable="true" type="tns:ErrorTypes" />
   <xs:complexType name="LoginInfo">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Rate" type="xs:double" />
       <xs:element minOccurs="0" name="RoleType" type="tns:RoleTypes" />
       <xs:element minOccurs="0" name="SessionGuid" type="ser:guid" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
@@ -96,4 +98,67 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ClientInfo" nillable="true" type="tns:ClientInfo" />
+  <xs:complexType name="ResultOfArrayOfUserInfoxdEytY2q">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ResultOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ArrayOfUserInfo" Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Result">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Data" nillable="true" type="tns:ArrayOfUserInfo" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ResultOfArrayOfUserInfoxdEytY2q" nillable="true" type="tns:ResultOfArrayOfUserInfoxdEytY2q" />
+  <xs:complexType name="ArrayOfUserInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserInfo" nillable="true" type="tns:UserInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserInfo" nillable="true" type="tns:ArrayOfUserInfo" />
+  <xs:complexType name="UserInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserInfo" nillable="true" type="tns:UserInfo" />
+  <xs:complexType name="UserParam">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Rate" type="xs:double" />
+      <xs:element minOccurs="0" name="Roles" nillable="true" type="tns:ArrayOfRoleTypes" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserParam" nillable="true" type="tns:UserParam" />
+  <xs:complexType name="ArrayOfRoleTypes">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RoleTypes" type="tns:RoleTypes" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRoleTypes" nillable="true" type="tns:ArrayOfRoleTypes" />
+  <xs:complexType name="ResultOfUserParamxdEytY2q">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="ResultOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="UserParam" Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Result">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Data" nillable="true" type="tns:UserParam" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ResultOfUserParamxdEytY2q" nillable="true" type="tns:ResultOfUserParamxdEytY2q" />
 </xs:schema>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<UsersProvider xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AdminPass>21232f297a57a5a743894a0e4a801fc3</AdminPass>
+  <Logins>
+    <UserParam>
+      <Login>test1</Login>
+      <Password>5a105e8b9d40e1329780d62ea2265d8a</Password>
+      <Roles>
+        <RoleTypes>Payin</RoleTypes>
+      </Roles>
+      <UserName>PayIn Test User</UserName>
+      <Rate>0.5</Rate>
+    </UserParam>
+    <UserParam>
+      <Login>test2</Login>
+      <Password>ad0234829205b9033196ba818f7a872b</Password>
+      <Roles>
+        <RoleTypes>Payout</RoleTypes>
+      </Roles>
+      <UserName>PayOut Test User</UserName>
+      <Rate>0.5</Rate>
+    </UserParam>
+  </Logins>
+</UsersProvider>

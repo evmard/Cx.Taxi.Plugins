@@ -57,6 +57,42 @@
   <wsdl:message name="IClientBonusService_SendPayoutCode_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendPayoutCodeResponse" />
   </wsdl:message>
+  <wsdl:message name="IClientBonusService_GetUsersList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersList" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_GetUsersList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_CreateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUser" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_CreateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_GetUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_GetUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_UpdateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUser" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_UpdateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_RemoveUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUser" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_RemoveUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_ChangeAdminPass_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeAdminPass" />
+  </wsdl:message>
+  <wsdl:message name="IClientBonusService_ChangeAdminPass_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeAdminPassResponse" />
+  </wsdl:message>
   <wsdl:portType name="IClientBonusService">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/Login" message="tns:IClientBonusService_Login_InputMessage" />
@@ -89,6 +125,30 @@
     <wsdl:operation name="SendPayoutCode">
       <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/SendPayoutCode" message="tns:IClientBonusService_SendPayoutCode_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/SendPayoutCodeResponse" message="tns:IClientBonusService_SendPayoutCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/GetUsersList" message="tns:IClientBonusService_GetUsersList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/GetUsersListResponse" message="tns:IClientBonusService_GetUsersList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/CreateUser" message="tns:IClientBonusService_CreateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/CreateUserResponse" message="tns:IClientBonusService_CreateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/GetUser" message="tns:IClientBonusService_GetUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/GetUserResponse" message="tns:IClientBonusService_GetUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/UpdateUser" message="tns:IClientBonusService_UpdateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/UpdateUserResponse" message="tns:IClientBonusService_UpdateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/RemoveUser" message="tns:IClientBonusService_RemoveUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/RemoveUserResponse" message="tns:IClientBonusService_RemoveUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAdminPass">
+      <wsdl:input wsaw:Action="http://tempuri.org/IClientBonusService/ChangeAdminPass" message="tns:IClientBonusService_ChangeAdminPass_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IClientBonusService/ChangeAdminPassResponse" message="tns:IClientBonusService_ChangeAdminPass_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IClientBonusService" type="tns:IClientBonusService">
@@ -158,6 +218,60 @@
     </wsdl:operation>
     <wsdl:operation name="SendPayoutCode">
       <soap:operation soapAction="http://tempuri.org/IClientBonusService/SendPayoutCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersList">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/GetUsersList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/CreateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/GetUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/UpdateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/RemoveUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAdminPass">
+      <soap:operation soapAction="http://tempuri.org/IClientBonusService/ChangeAdminPass" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

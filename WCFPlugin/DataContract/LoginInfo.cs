@@ -14,11 +14,15 @@ namespace WCFPlugin.DataContract
 
         [DataMember]
         public RoleTypes RoleType { get; set; }
+
+        [DataMember]
+        public double Rate { get; set; }
     }
 
     public enum RoleTypes
     {
         Payin,
-        Payout
+        Payout,
+        Admin
     }
 }

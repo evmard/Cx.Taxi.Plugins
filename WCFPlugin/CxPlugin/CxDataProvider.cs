@@ -32,19 +32,6 @@ namespace WCFPlugin.CxPlugin
             _users = users;
         }
 
-        public LogonResult TryGetConnection(
-            string login,
-            string pass,
-            long roleId, 
-            out ICxChildConnection connection, 
-            out string errorMsg)
-        {
-            var logonResult = CxServerUtils.ConnectChild(login, pass, roleId, PluginParams.HostName, out connection, out errorMsg);
-            GlobalLogManager.WriteString("Info: WCFPlugin TryGetConnection: {0}, {1}, {2}, {3};\n\t{4}, {5}",
-                login, pass, roleId, PluginParams.HostName, logonResult, errorMsg);
-            return logonResult;
-        }
-
         public IClient GetClient(string phone)
         {
             ICorporation corp;
@@ -89,12 +76,6 @@ namespace WCFPlugin.CxPlugin
             DoPayments(-amount, client, logDescription, messageTemplate);
             clientInfo = new ClientInfo(client, _clientManager.GetDefaultPhone(clientId));
             return true;
-        }
-
-        public string GetUserName(long userId)
-        {
-            var user = _users.GetByID(userId);
-            return user == null ? "Не найден" : user.Name_F + " " + user.Name_I + " " + user.Name_O;
         }
 
         public void SendCode(string phone, string text, SendMethod sendMethod)

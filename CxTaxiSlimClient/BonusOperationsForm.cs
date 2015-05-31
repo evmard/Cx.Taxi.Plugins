@@ -42,21 +42,31 @@ namespace CxTaxiSlimClient
 
             btnSendAgain.Visible = false;
 
-            teSumm.Minimum = 0;
-
             switch (_operationType)
             {
                 case OperationType.PayIn:
+                    teSumm.Visible = true;
+                    lblSumm.Visible = true;
+                    teOpSumm.Enabled = false;
+                    teOpSumm.ReadOnly = true;
+                    lblOperationSumm.Text = "Зачислить";
                     _operationTitle = "Зачисление на счет";
                     break;
                 case OperationType.PayOut:
-                    teSumm.Maximum = (decimal)ClientInfo.Balance;
+                    teSumm.Visible = false;
+                    lblSumm.Visible = false;
+                    lblOperationSumm.Text = "Списать";
+                    teOpSumm.Enabled = true;
+                    teOpSumm.ReadOnly = false;
+                    teOpSumm.MaxValue = ClientInfo.Balance;
                     _operationTitle = "Списание со счета";
                     break;
                 default:
                     _operationTitle = "Не известный тип операции";
                     break;
             }
+
+            this.Text = _operationTitle;
 
             _resendEnable = 
                 () =>
@@ -92,7 +102,7 @@ namespace CxTaxiSlimClient
 
                 _codeWasSent = true;
                 tePhone.Enabled = false;
-                teSumm.Enabled = false;
+                teOpSumm.Enabled = false;
                 lblCode.Visible = true;
                 teCode.Visible = true;
                 btnOk.Text = Resources.BonusOperationsForm_btnOk_Do;
@@ -110,10 +120,10 @@ namespace CxTaxiSlimClient
                     switch (_operationType)
                     {
                         case OperationType.PayIn:
-                            result = _service.PayInToAccount(ClientInfo.Id, int.Parse(teCode.Text), _loginInfo);
+                            result = _service.PayInToAccount(ClientInfo.Id, int.Parse(teCode.Text), _loginInfo.SessionGuid);
                             break;
                         case OperationType.PayOut:
-                            result = _service.PayoutFromAccount(ClientInfo.Id, int.Parse(teCode.Text), _loginInfo);
+                            result = _service.PayoutFromAccount(ClientInfo.Id, int.Parse(teCode.Text), _loginInfo.SessionGuid);
                             break;
                         default:
                             result = new ResultOfClientInfoxdEytY2q
@@ -156,6 +166,13 @@ namespace CxTaxiSlimClient
                 ClientInfo = result.Data;
                 DialogResult = DialogResult.OK;
                 _tokenSource.Cancel();
+
+                MessageBox.Show(
+                    this,
+                    "Операция выполнена успешно.",
+                    _operationTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 Close();
             }
         }
@@ -186,12 +203,12 @@ namespace CxTaxiSlimClient
                 switch (_operationType)
                 {
                     case OperationType.PayIn:
-                        result = _service.SendPayinCode(ClientInfo.Id, tePhone.Text, (double)teSumm.Value,
-                            sendMethod, _loginInfo);
+                        result = _service.SendPayinCode(ClientInfo.Id, tePhone.Text, double.Parse(teOpSumm.Text),
+                            sendMethod, _loginInfo.SessionGuid);
                         break;
                     case OperationType.PayOut:
-                        result = _service.SendPayoutCode(ClientInfo.Id, tePhone.Text, (double)teSumm.Value,
-                            sendMethod, _loginInfo);
+                        result = _service.SendPayoutCode(ClientInfo.Id, tePhone.Text, double.Parse(teOpSumm.Text),
+                            sendMethod, _loginInfo.SessionGuid);
                         break;
                     default:
                         result = new Result
@@ -251,6 +268,18 @@ namespace CxTaxiSlimClient
 
             btnSendAgain.Enabled = false;
             TaskToEnableResendBtn();
+        }
+
+        private void teSumm_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(teSumm.Text))
+            {
+                teOpSumm.Text = (double.Parse(teSumm.Text) * _loginInfo.Rate).ToString("F2");
+            }
+            else
+            {
+                teOpSumm.Text = "0.0";
+            }
         }
     }
 

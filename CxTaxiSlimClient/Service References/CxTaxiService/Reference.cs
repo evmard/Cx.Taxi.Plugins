@@ -22,6 +22,9 @@ namespace CxTaxiSlimClient.CxTaxiService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Payout = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Admin = 2,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -29,6 +32,8 @@ namespace CxTaxiSlimClient.CxTaxiService {
     [System.Runtime.Serialization.DataContractAttribute(Name="Result", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CxTaxiSlimClient.CxTaxiService.ResultOfArrayOfUserInfoxdEytY2q))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CxTaxiSlimClient.CxTaxiService.ResultOfUserParamxdEytY2q))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q))]
     public partial class Result : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -128,6 +133,52 @@ namespace CxTaxiSlimClient.CxTaxiService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultOfArrayOfUserInfoxdEytY2q", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class ResultOfArrayOfUserInfoxdEytY2q : CxTaxiSlimClient.CxTaxiService.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CxTaxiSlimClient.CxTaxiService.UserInfo[] DataField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CxTaxiSlimClient.CxTaxiService.UserInfo[] Data {
+            get {
+                return this.DataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataField, value) != true)) {
+                    this.DataField = value;
+                    this.RaisePropertyChanged("Data");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultOfUserParamxdEytY2q", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class ResultOfUserParamxdEytY2q : CxTaxiSlimClient.CxTaxiService.Result {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CxTaxiSlimClient.CxTaxiService.UserParam DataField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CxTaxiSlimClient.CxTaxiService.UserParam Data {
+            get {
+                return this.DataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataField, value) != true)) {
+                    this.DataField = value;
+                    this.RaisePropertyChanged("Data");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ResultOfLoginInfoxdEytY2q", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract")]
     [System.SerializableAttribute()]
     public partial class ResultOfLoginInfoxdEytY2q : CxTaxiSlimClient.CxTaxiService.Result {
@@ -179,6 +230,9 @@ namespace CxTaxiSlimClient.CxTaxiService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double RateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private CxTaxiSlimClient.CxTaxiService.RoleTypes RoleTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -194,6 +248,19 @@ namespace CxTaxiSlimClient.CxTaxiService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Rate {
+            get {
+                return this.RateField;
+            }
+            set {
+                if ((this.RateField.Equals(value) != true)) {
+                    this.RateField = value;
+                    this.RaisePropertyChanged("Rate");
+                }
             }
         }
         
@@ -627,6 +694,176 @@ namespace CxTaxiSlimClient.CxTaxiService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserInfo", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class UserInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserParam", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class UserParam : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double RateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CxTaxiSlimClient.CxTaxiService.RoleTypes[] RolesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Rate {
+            get {
+                return this.RateField;
+            }
+            set {
+                if ((this.RateField.Equals(value) != true)) {
+                    this.RateField = value;
+                    this.RaisePropertyChanged("Rate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CxTaxiSlimClient.CxTaxiService.RoleTypes[] Roles {
+            get {
+                return this.RolesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RolesField, value) != true)) {
+                    this.RolesField = value;
+                    this.RaisePropertyChanged("Roles");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SendMethod", Namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.Contract")]
     public enum SendMethod : int {
@@ -652,46 +889,82 @@ namespace CxTaxiSlimClient.CxTaxiService {
         System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q> LoginAsync(string login, string pass, CxTaxiSlimClient.CxTaxiService.RoleTypes roleType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/Logout", ReplyAction="http://tempuri.org/IClientBonusService/LogoutResponse")]
-        void Logout(CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        void Logout(System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/Logout", ReplyAction="http://tempuri.org/IClientBonusService/LogoutResponse")]
-        System.Threading.Tasks.Task LogoutAsync(CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        System.Threading.Tasks.Task LogoutAsync(System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/GetClientByPhone", ReplyAction="http://tempuri.org/IClientBonusService/GetClientByPhoneResponse")]
-        CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q GetClientByPhone(string phone, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q GetClientByPhone(string phone, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/GetClientByPhone", ReplyAction="http://tempuri.org/IClientBonusService/GetClientByPhoneResponse")]
-        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> GetClientByPhoneAsync(string phone, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> GetClientByPhoneAsync(string phone, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/CreateNewClient", ReplyAction="http://tempuri.org/IClientBonusService/CreateNewClientResponse")]
-        CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q CreateNewClient(string phone, string name, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q CreateNewClient(string phone, string name, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/CreateNewClient", ReplyAction="http://tempuri.org/IClientBonusService/CreateNewClientResponse")]
-        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> CreateNewClientAsync(string phone, string name, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> CreateNewClientAsync(string phone, string name, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/PayoutFromAccount", ReplyAction="http://tempuri.org/IClientBonusService/PayoutFromAccountResponse")]
-        CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q PayoutFromAccount(long clientId, int operationCode, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q PayoutFromAccount(long clientId, int operationCode, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/PayoutFromAccount", ReplyAction="http://tempuri.org/IClientBonusService/PayoutFromAccountResponse")]
-        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> PayoutFromAccountAsync(long clientId, int operationCode, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> PayoutFromAccountAsync(long clientId, int operationCode, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/PayInToAccount", ReplyAction="http://tempuri.org/IClientBonusService/PayInToAccountResponse")]
-        CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q PayInToAccount(long clientId, int operationCode, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q PayInToAccount(long clientId, int operationCode, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/PayInToAccount", ReplyAction="http://tempuri.org/IClientBonusService/PayInToAccountResponse")]
-        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> PayInToAccountAsync(long clientId, int operationCode, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> PayInToAccountAsync(long clientId, int operationCode, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/SendPayinCode", ReplyAction="http://tempuri.org/IClientBonusService/SendPayinCodeResponse")]
-        CxTaxiSlimClient.CxTaxiService.Result SendPayinCode(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        CxTaxiSlimClient.CxTaxiService.Result SendPayinCode(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/SendPayinCode", ReplyAction="http://tempuri.org/IClientBonusService/SendPayinCodeResponse")]
-        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> SendPayinCodeAsync(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> SendPayinCodeAsync(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/SendPayoutCode", ReplyAction="http://tempuri.org/IClientBonusService/SendPayoutCodeResponse")]
-        CxTaxiSlimClient.CxTaxiService.Result SendPayoutCode(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        CxTaxiSlimClient.CxTaxiService.Result SendPayoutCode(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, System.Guid sessionGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/SendPayoutCode", ReplyAction="http://tempuri.org/IClientBonusService/SendPayoutCodeResponse")]
-        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> SendPayoutCodeAsync(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo);
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> SendPayoutCodeAsync(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/GetUsersList", ReplyAction="http://tempuri.org/IClientBonusService/GetUsersListResponse")]
+        CxTaxiSlimClient.CxTaxiService.ResultOfArrayOfUserInfoxdEytY2q GetUsersList(System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/GetUsersList", ReplyAction="http://tempuri.org/IClientBonusService/GetUsersListResponse")]
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfArrayOfUserInfoxdEytY2q> GetUsersListAsync(System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/CreateUser", ReplyAction="http://tempuri.org/IClientBonusService/CreateUserResponse")]
+        CxTaxiSlimClient.CxTaxiService.Result CreateUser(CxTaxiSlimClient.CxTaxiService.UserParam user, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/CreateUser", ReplyAction="http://tempuri.org/IClientBonusService/CreateUserResponse")]
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> CreateUserAsync(CxTaxiSlimClient.CxTaxiService.UserParam user, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/GetUser", ReplyAction="http://tempuri.org/IClientBonusService/GetUserResponse")]
+        CxTaxiSlimClient.CxTaxiService.ResultOfUserParamxdEytY2q GetUser(string userLogin, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/GetUser", ReplyAction="http://tempuri.org/IClientBonusService/GetUserResponse")]
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfUserParamxdEytY2q> GetUserAsync(string userLogin, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/UpdateUser", ReplyAction="http://tempuri.org/IClientBonusService/UpdateUserResponse")]
+        CxTaxiSlimClient.CxTaxiService.Result UpdateUser(CxTaxiSlimClient.CxTaxiService.UserParam user, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/UpdateUser", ReplyAction="http://tempuri.org/IClientBonusService/UpdateUserResponse")]
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> UpdateUserAsync(CxTaxiSlimClient.CxTaxiService.UserParam user, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/RemoveUser", ReplyAction="http://tempuri.org/IClientBonusService/RemoveUserResponse")]
+        CxTaxiSlimClient.CxTaxiService.Result RemoveUser(string userLogin, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/RemoveUser", ReplyAction="http://tempuri.org/IClientBonusService/RemoveUserResponse")]
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> RemoveUserAsync(string userLogin, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/ChangeAdminPass", ReplyAction="http://tempuri.org/IClientBonusService/ChangeAdminPassResponse")]
+        CxTaxiSlimClient.CxTaxiService.Result ChangeAdminPass(string newPass, System.Guid sessionGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IClientBonusService/ChangeAdminPass", ReplyAction="http://tempuri.org/IClientBonusService/ChangeAdminPassResponse")]
+        System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> ChangeAdminPassAsync(string newPass, System.Guid sessionGuid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -729,60 +1002,108 @@ namespace CxTaxiSlimClient.CxTaxiService {
             return base.Channel.LoginAsync(login, pass, roleType);
         }
         
-        public void Logout(CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            base.Channel.Logout(loginInfo);
+        public void Logout(System.Guid sessionGuid) {
+            base.Channel.Logout(sessionGuid);
         }
         
-        public System.Threading.Tasks.Task LogoutAsync(CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.LogoutAsync(loginInfo);
+        public System.Threading.Tasks.Task LogoutAsync(System.Guid sessionGuid) {
+            return base.Channel.LogoutAsync(sessionGuid);
         }
         
-        public CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q GetClientByPhone(string phone, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.GetClientByPhone(phone, loginInfo);
+        public CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q GetClientByPhone(string phone, System.Guid sessionGuid) {
+            return base.Channel.GetClientByPhone(phone, sessionGuid);
         }
         
-        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> GetClientByPhoneAsync(string phone, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.GetClientByPhoneAsync(phone, loginInfo);
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> GetClientByPhoneAsync(string phone, System.Guid sessionGuid) {
+            return base.Channel.GetClientByPhoneAsync(phone, sessionGuid);
         }
         
-        public CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q CreateNewClient(string phone, string name, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.CreateNewClient(phone, name, loginInfo);
+        public CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q CreateNewClient(string phone, string name, System.Guid sessionGuid) {
+            return base.Channel.CreateNewClient(phone, name, sessionGuid);
         }
         
-        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> CreateNewClientAsync(string phone, string name, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.CreateNewClientAsync(phone, name, loginInfo);
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> CreateNewClientAsync(string phone, string name, System.Guid sessionGuid) {
+            return base.Channel.CreateNewClientAsync(phone, name, sessionGuid);
         }
         
-        public CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q PayoutFromAccount(long clientId, int operationCode, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.PayoutFromAccount(clientId, operationCode, loginInfo);
+        public CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q PayoutFromAccount(long clientId, int operationCode, System.Guid sessionGuid) {
+            return base.Channel.PayoutFromAccount(clientId, operationCode, sessionGuid);
         }
         
-        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> PayoutFromAccountAsync(long clientId, int operationCode, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.PayoutFromAccountAsync(clientId, operationCode, loginInfo);
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> PayoutFromAccountAsync(long clientId, int operationCode, System.Guid sessionGuid) {
+            return base.Channel.PayoutFromAccountAsync(clientId, operationCode, sessionGuid);
         }
         
-        public CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q PayInToAccount(long clientId, int operationCode, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.PayInToAccount(clientId, operationCode, loginInfo);
+        public CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q PayInToAccount(long clientId, int operationCode, System.Guid sessionGuid) {
+            return base.Channel.PayInToAccount(clientId, operationCode, sessionGuid);
         }
         
-        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> PayInToAccountAsync(long clientId, int operationCode, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.PayInToAccountAsync(clientId, operationCode, loginInfo);
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q> PayInToAccountAsync(long clientId, int operationCode, System.Guid sessionGuid) {
+            return base.Channel.PayInToAccountAsync(clientId, operationCode, sessionGuid);
         }
         
-        public CxTaxiSlimClient.CxTaxiService.Result SendPayinCode(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.SendPayinCode(clientId, phone, summ, sendMethod, loginInfo);
+        public CxTaxiSlimClient.CxTaxiService.Result SendPayinCode(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, System.Guid sessionGuid) {
+            return base.Channel.SendPayinCode(clientId, phone, summ, sendMethod, sessionGuid);
         }
         
-        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> SendPayinCodeAsync(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.SendPayinCodeAsync(clientId, phone, summ, sendMethod, loginInfo);
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> SendPayinCodeAsync(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, System.Guid sessionGuid) {
+            return base.Channel.SendPayinCodeAsync(clientId, phone, summ, sendMethod, sessionGuid);
         }
         
-        public CxTaxiSlimClient.CxTaxiService.Result SendPayoutCode(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.SendPayoutCode(clientId, phone, summ, sendMethod, loginInfo);
+        public CxTaxiSlimClient.CxTaxiService.Result SendPayoutCode(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, System.Guid sessionGuid) {
+            return base.Channel.SendPayoutCode(clientId, phone, summ, sendMethod, sessionGuid);
         }
         
-        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> SendPayoutCodeAsync(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, CxTaxiSlimClient.CxTaxiService.LoginInfo loginInfo) {
-            return base.Channel.SendPayoutCodeAsync(clientId, phone, summ, sendMethod, loginInfo);
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> SendPayoutCodeAsync(long clientId, string phone, double summ, CxTaxiSlimClient.CxTaxiService.SendMethod sendMethod, System.Guid sessionGuid) {
+            return base.Channel.SendPayoutCodeAsync(clientId, phone, summ, sendMethod, sessionGuid);
+        }
+        
+        public CxTaxiSlimClient.CxTaxiService.ResultOfArrayOfUserInfoxdEytY2q GetUsersList(System.Guid sessionGuid) {
+            return base.Channel.GetUsersList(sessionGuid);
+        }
+        
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfArrayOfUserInfoxdEytY2q> GetUsersListAsync(System.Guid sessionGuid) {
+            return base.Channel.GetUsersListAsync(sessionGuid);
+        }
+        
+        public CxTaxiSlimClient.CxTaxiService.Result CreateUser(CxTaxiSlimClient.CxTaxiService.UserParam user, System.Guid sessionGuid) {
+            return base.Channel.CreateUser(user, sessionGuid);
+        }
+        
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> CreateUserAsync(CxTaxiSlimClient.CxTaxiService.UserParam user, System.Guid sessionGuid) {
+            return base.Channel.CreateUserAsync(user, sessionGuid);
+        }
+        
+        public CxTaxiSlimClient.CxTaxiService.ResultOfUserParamxdEytY2q GetUser(string userLogin, System.Guid sessionGuid) {
+            return base.Channel.GetUser(userLogin, sessionGuid);
+        }
+        
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.ResultOfUserParamxdEytY2q> GetUserAsync(string userLogin, System.Guid sessionGuid) {
+            return base.Channel.GetUserAsync(userLogin, sessionGuid);
+        }
+        
+        public CxTaxiSlimClient.CxTaxiService.Result UpdateUser(CxTaxiSlimClient.CxTaxiService.UserParam user, System.Guid sessionGuid) {
+            return base.Channel.UpdateUser(user, sessionGuid);
+        }
+        
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> UpdateUserAsync(CxTaxiSlimClient.CxTaxiService.UserParam user, System.Guid sessionGuid) {
+            return base.Channel.UpdateUserAsync(user, sessionGuid);
+        }
+        
+        public CxTaxiSlimClient.CxTaxiService.Result RemoveUser(string userLogin, System.Guid sessionGuid) {
+            return base.Channel.RemoveUser(userLogin, sessionGuid);
+        }
+        
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> RemoveUserAsync(string userLogin, System.Guid sessionGuid) {
+            return base.Channel.RemoveUserAsync(userLogin, sessionGuid);
+        }
+        
+        public CxTaxiSlimClient.CxTaxiService.Result ChangeAdminPass(string newPass, System.Guid sessionGuid) {
+            return base.Channel.ChangeAdminPass(newPass, sessionGuid);
+        }
+        
+        public System.Threading.Tasks.Task<CxTaxiSlimClient.CxTaxiService.Result> ChangeAdminPassAsync(string newPass, System.Guid sessionGuid) {
+            return base.Channel.ChangeAdminPassAsync(newPass, sessionGuid);
         }
     }
 }

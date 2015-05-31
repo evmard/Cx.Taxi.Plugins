@@ -1,18 +1,33 @@
 ﻿using Cx.Client.Utils.Server;
+using System;
 using WCFPlugin.DataContract;
 
 namespace WCFPlugin
 {
-    internal class SessionInfo
+    public class SessionInfo
     {
-        public LoginInfo LoginInfo { get; set; }
+        public SessionInfo(UserParam loginParam, Guid guid, RoleTypes currentRole)
+        {
+            LoginParam = loginParam;
+            Guid = guid;
+            CurrentRole = currentRole;
+        }
 
-        public bool CanDoPayIn { get; set; }
+        public UserParam LoginParam { get; private set; }
 
-        public bool CanDoPayout { get; set; }
+        public Guid Guid { get; private set; }
 
-        public ICxChildConnection Connection { get; set; }
+        public RoleTypes CurrentRole { get; private set; }
 
-        public bool CanCreateNewClients { get; set; }
+        public LoginInfo GetLoginInfo()
+        {
+            return new LoginInfo
+            {
+                RoleType = CurrentRole,
+                SessionGuid = Guid,
+                UserName = LoginParam.UserName,
+                Rate = LoginParam.Rate
+            };
+        }
     }
 }

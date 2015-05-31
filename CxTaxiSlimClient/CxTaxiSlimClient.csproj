@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>promotion_gE5_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -74,6 +77,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SummEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControlForm.Designer.cs">
+      <DependentUpon>UserControlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserEditForm.Designer.cs">
+      <DependentUpon>UserEditForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="BonusOperationsForm.resx">
       <DependentUpon>BonusOperationsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -96,6 +114,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UserControlForm.resx">
+      <DependentUpon>UserControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserEditForm.resx">
+      <DependentUpon>UserEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -111,10 +135,16 @@
     <None Include="Service References\CxTaxiService\CxTaxiSlimClient.CxTaxiService.Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\CxTaxiService\CxTaxiSlimClient.CxTaxiService.ResultOfArrayOfUserInfoxdEytY2q.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\CxTaxiService\CxTaxiSlimClient.CxTaxiService.ResultOfClientInfoxdEytY2q.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\CxTaxiService\CxTaxiSlimClient.CxTaxiService.ResultOfLoginInfoxdEytY2q.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CxTaxiService\CxTaxiSlimClient.CxTaxiService.ResultOfUserParamxdEytY2q.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\CxTaxiService\service.wsdl" />
@@ -151,6 +181,10 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="promotion_gE5_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

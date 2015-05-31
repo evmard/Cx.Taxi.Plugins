@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using Cx.Client.CallManagement;
 using Cx.Client.Data;
@@ -8,7 +11,9 @@ using Cx.Client.Managers;
 using Cx.Client.Taxi.Billings.Data;
 using Cx.Client.Taxi.Enums;
 using Cx.Client.Taxi.Orders.Data;
+using Cx.Client.Taxi.Clients.Data;
 using Cx.Client.Utils;
+using Cx.Client.Utils.Extensions;
 
 namespace Cx.Client.Taxi.ClientsBounty
 {
@@ -17,6 +22,7 @@ namespace Cx.Client.Taxi.ClientsBounty
       private IOrders _orders;
       private IBillings _billings;
       private OrderRoutine.OrderRoutine _orderRoutine;
+      private IClients _clients;
 
       private PluginParams _param;
       private readonly Object _paramLock = new Object();
@@ -37,6 +43,7 @@ namespace Cx.Client.Taxi.ClientsBounty
               }
 
               _orders.StatePropertyChanged += _orders_StatePropertyChanged;
+              _billings.BalancePropertyChanged += _billings_BalancePropertyChanged;
           }
           catch (Exception e)
           {
@@ -49,6 +56,64 @@ namespace Cx.Client.Taxi.ClientsBounty
           _watcher.NotifyFilter = NotifyFilters.LastWrite;
           _watcher.Changed += watcher_Changed;
           _watcher.EnableRaisingEvents = true;         
+      }
+
+      void _billings_BalancePropertyChanged(object sender, CxPropertyChangedEventArgs<IBilling> e)
+      {
+          var billing = e.Object;
+          if (billing.DataObjectDeleted)
+              return;
+
+          if (billing.OwnerType == BillingLogType.Client)
+          {
+              double oldBalance = ((double?) e.OldValue) ?? 0;
+              double newBalance = billing.Balance ?? 0;
+              if (oldBalance < _param.BalanceNotifySumm && newBalance >= _param.BalanceNotifySumm)
+                  DoBalanceNotify(billing);
+          }
+      }
+
+      private void DoBalanceNotify(IBilling billing)
+      {
+          if (billing == null)
+              return;
+
+          Stopwatch timeWatcher = new Stopwatch();
+          var clients = ClientManager.ClientManager.GetManager().GetClients();
+          IClient client = null;
+          timeWatcher.Start();
+          foreach (var item in clients)
+          {
+              if (item.IDBilling == billing.ID)
+              {
+                  client = item;
+                  break;
+              }
+          }
+          timeWatcher.Stop();
+          if (timeWatcher.ElapsedMilliseconds > 500)
+              GlobalLogManager.WriteString("Warning: ClientsBountyManager. Поиск клиента по IDBilling более 500 мс.");
+
+          if (client == null)
+          {
+              GlobalLogManager.WriteString("Error: ClientsBountyManager. Не найден клиент со счетом ID = {0}, Account = {1}", billing.ID, billing.Account);
+              return;
+          }
+
+          string number = ClientManager.ClientManager.GetManager().GetDefaultPhone(client.ID);
+
+          if (!string.IsNullOrWhiteSpace(number))
+          {
+              if (_param.NeedMakeBalanceNotifyCall)
+                  CallManagementInterface.StartAutoinformator(number, _param.BalanceNotifyMessage, 0);
+
+              if (_param.NeedSendBalanceNotifySMS)
+                  CallManagementInterface.SendSMS(number, _param.BalanceNotifyMessage, 0);
+          }
+          else
+          {
+              GlobalLogManager.WriteString("Warning: ClientsBountyManager. У клиента не указан номер телефона");
+          }
       }
 
       private void watcher_Changed(object sender, FileSystemEventArgs e)
@@ -110,8 +175,8 @@ namespace Cx.Client.Taxi.ClientsBounty
               }
 
               var bountySumm = order.Cost.Value * param.Procent;
-
-              client.Billing.Balance += bountySumm; //Пополняем счет клиента
+              double oldBalance = client.Billing.Balance ?? 0;
+              client.Billing.Balance = oldBalance + bountySumm; //Пополняем счет клиента
               PaymentRoutine.PaymentRoutine.AddBillingLogsInThreadPool( //И записываем в лог
                   bountySumm,
                   BillingTypes.Order,

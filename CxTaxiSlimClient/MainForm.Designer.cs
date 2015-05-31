@@ -41,16 +41,16 @@ namespace CxTaxiSlimClient
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsRelogin = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsUserControl = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.teBalance = new System.Windows.Forms.TextBox();
-            this.teBillingNumber = new System.Windows.Forms.TextBox();
-            this.lblBalance = new System.Windows.Forms.Label();
-            this.lblBullingNumber = new System.Windows.Forms.Label();
-            this.teBirthday = new System.Windows.Forms.TextBox();
-            this.teName = new System.Windows.Forms.TextBox();
-            this.lblBirthday = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblBirthday = new System.Windows.Forms.Label();
+            this.teName = new System.Windows.Forms.TextBox();
+            this.teBirthday = new System.Windows.Forms.TextBox();
+            this.lblBullingNumber = new System.Windows.Forms.Label();
+            this.lblBalance = new System.Windows.Forms.Label();
+            this.teBillingNumber = new System.Windows.Forms.TextBox();
+            this.teBalance = new System.Windows.Forms.TextBox();
             this.teDiscount = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -59,6 +59,7 @@ namespace CxTaxiSlimClient
             this.teService = new System.Windows.Forms.TextBox();
             this.teOrdersDone = new System.Windows.Forms.TextBox();
             this.teOrdersCanceled = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.mainTool.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -74,7 +75,8 @@ namespace CxTaxiSlimClient
             this.tsPayoutBtn,
             this.toolStripSeparator2,
             this.tsRelogin,
-            this.toolStripSeparator3});
+            this.toolStripSeparator3,
+            this.tsUserControl});
             this.mainTool.Location = new System.Drawing.Point(0, 0);
             this.mainTool.Margin = new System.Windows.Forms.Padding(2);
             this.mainTool.Name = "mainTool";
@@ -150,6 +152,18 @@ namespace CxTaxiSlimClient
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
+            // tsUserControl
+            // 
+            this.tsUserControl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsUserControl.Image = ((System.Drawing.Image)(resources.GetObject("tsUserControl.Image")));
+            this.tsUserControl.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsUserControl.Name = "tsUserControl";
+            this.tsUserControl.Size = new System.Drawing.Size(23, 22);
+            this.tsUserControl.Text = "toolStripButton1";
+            this.tsUserControl.ToolTipText = "Управление пользователями";
+            this.tsUserControl.Visible = false;
+            this.tsUserControl.Click += new System.EventHandler(this.tsUserControl_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 5;
@@ -186,65 +200,15 @@ namespace CxTaxiSlimClient
             this.tableLayoutPanel1.Size = new System.Drawing.Size(552, 240);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // teBalance
+            // lblName
             // 
-            this.teBalance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.teBalance.Location = new System.Drawing.Point(412, 29);
-            this.teBalance.Name = "teBalance";
-            this.teBalance.ReadOnly = true;
-            this.teBalance.Size = new System.Drawing.Size(137, 20);
-            this.teBalance.TabIndex = 7;
-            // 
-            // teBillingNumber
-            // 
-            this.teBillingNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.teBillingNumber.Location = new System.Drawing.Point(412, 3);
-            this.teBillingNumber.Name = "teBillingNumber";
-            this.teBillingNumber.ReadOnly = true;
-            this.teBillingNumber.Size = new System.Drawing.Size(137, 20);
-            this.teBillingNumber.TabIndex = 6;
-            // 
-            // lblBalance
-            // 
-            this.lblBalance.AutoSize = true;
-            this.lblBalance.Location = new System.Drawing.Point(303, 31);
-            this.lblBalance.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.lblBalance.Name = "lblBalance";
-            this.lblBalance.Size = new System.Drawing.Size(44, 13);
-            this.lblBalance.TabIndex = 5;
-            this.lblBalance.Text = "Баланс";
-            // 
-            // lblBullingNumber
-            // 
-            this.lblBullingNumber.AutoSize = true;
-            this.lblBullingNumber.Location = new System.Drawing.Point(303, 5);
-            this.lblBullingNumber.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            this.lblBullingNumber.Name = "lblBullingNumber";
-            this.lblBullingNumber.Size = new System.Drawing.Size(72, 13);
-            this.lblBullingNumber.TabIndex = 4;
-            this.lblBullingNumber.Text = "Номер счета";
-            // 
-            // teBirthday
-            // 
-            this.teBirthday.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.teBirthday.Location = new System.Drawing.Point(140, 29);
-            this.teBirthday.Name = "teBirthday";
-            this.teBirthday.ReadOnly = true;
-            this.teBirthday.Size = new System.Drawing.Size(137, 20);
-            this.teBirthday.TabIndex = 3;
-            // 
-            // teName
-            // 
-            this.teName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.teName.Location = new System.Drawing.Point(140, 3);
-            this.teName.Name = "teName";
-            this.teName.ReadOnly = true;
-            this.teName.Size = new System.Drawing.Size(137, 20);
-            this.teName.TabIndex = 2;
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(3, 6);
+            this.lblName.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(131, 13);
+            this.lblName.TabIndex = 0;
+            this.lblName.Text = "Фамилия Имя Отчество";
             // 
             // lblBirthday
             // 
@@ -256,25 +220,65 @@ namespace CxTaxiSlimClient
             this.lblBirthday.TabIndex = 1;
             this.lblBirthday.Text = "Дата рождения";
             // 
-            // lblName
+            // teName
             // 
-            this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(3, 6);
-            this.lblName.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(131, 13);
-            this.lblName.TabIndex = 0;
-            this.lblName.Text = "Фамилия Имя Отчество";
+            this.teName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.teName.Location = new System.Drawing.Point(140, 3);
+            this.teName.Name = "teName";
+            this.teName.ReadOnly = true;
+            this.teName.Size = new System.Drawing.Size(137, 20);
+            this.teName.TabIndex = 2;
             // 
-            // panel1
+            // teBirthday
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.tableLayoutPanel1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 25);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(554, 137);
-            this.panel1.TabIndex = 3;
+            this.teBirthday.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.teBirthday.Location = new System.Drawing.Point(140, 29);
+            this.teBirthday.Name = "teBirthday";
+            this.teBirthday.ReadOnly = true;
+            this.teBirthday.Size = new System.Drawing.Size(137, 20);
+            this.teBirthday.TabIndex = 3;
+            // 
+            // lblBullingNumber
+            // 
+            this.lblBullingNumber.AutoSize = true;
+            this.lblBullingNumber.Location = new System.Drawing.Point(303, 5);
+            this.lblBullingNumber.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblBullingNumber.Name = "lblBullingNumber";
+            this.lblBullingNumber.Size = new System.Drawing.Size(72, 13);
+            this.lblBullingNumber.TabIndex = 4;
+            this.lblBullingNumber.Text = "Номер счета";
+            // 
+            // lblBalance
+            // 
+            this.lblBalance.AutoSize = true;
+            this.lblBalance.Location = new System.Drawing.Point(303, 31);
+            this.lblBalance.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblBalance.Name = "lblBalance";
+            this.lblBalance.Size = new System.Drawing.Size(44, 13);
+            this.lblBalance.TabIndex = 5;
+            this.lblBalance.Text = "Баланс";
+            // 
+            // teBillingNumber
+            // 
+            this.teBillingNumber.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.teBillingNumber.Location = new System.Drawing.Point(412, 3);
+            this.teBillingNumber.Name = "teBillingNumber";
+            this.teBillingNumber.ReadOnly = true;
+            this.teBillingNumber.Size = new System.Drawing.Size(137, 20);
+            this.teBillingNumber.TabIndex = 6;
+            // 
+            // teBalance
+            // 
+            this.teBalance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.teBalance.Location = new System.Drawing.Point(412, 29);
+            this.teBalance.Name = "teBalance";
+            this.teBalance.ReadOnly = true;
+            this.teBalance.Size = new System.Drawing.Size(137, 20);
+            this.teBalance.TabIndex = 7;
             // 
             // teDiscount
             // 
@@ -356,6 +360,16 @@ namespace CxTaxiSlimClient
             this.teOrdersCanceled.Size = new System.Drawing.Size(137, 20);
             this.teOrdersCanceled.TabIndex = 15;
             // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.tableLayoutPanel1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 25);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(554, 137);
+            this.panel1.TabIndex = 3;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -363,9 +377,9 @@ namespace CxTaxiSlimClient
             this.ClientSize = new System.Drawing.Size(554, 162);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainTool);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(570, 200);
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.Text = "MainForm";
             this.mainTool.ResumeLayout(false);
             this.mainTool.PerformLayout();
@@ -406,6 +420,7 @@ namespace CxTaxiSlimClient
         private TextBox teService;
         private TextBox teOrdersDone;
         private TextBox teOrdersCanceled;
+        private ToolStripButton tsUserControl;
 
     }
 }

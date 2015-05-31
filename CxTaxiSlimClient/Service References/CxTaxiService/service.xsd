@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/WCFPlugin.Contract" />
   <xs:element name="Login">
     <xs:complexType>
@@ -21,7 +22,7 @@
   <xs:element name="Logout">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q3:LoginInfo" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q3:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -34,7 +35,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q4:LoginInfo" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q4:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -50,7 +51,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q6:LoginInfo" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q6:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -66,7 +67,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="clientId" type="xs:long" />
         <xs:element minOccurs="0" name="operationCode" type="xs:int" />
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q8:LoginInfo" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q8:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -82,7 +83,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="clientId" type="xs:long" />
         <xs:element minOccurs="0" name="operationCode" type="xs:int" />
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q10:LoginInfo" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q10:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -100,7 +101,7 @@
         <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="summ" type="xs:double" />
         <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WCFPlugin.Contract" minOccurs="0" name="sendMethod" type="q12:SendMethod" />
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q13:LoginInfo" />
+        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q13:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -118,7 +119,7 @@
         <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="summ" type="xs:double" />
         <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WCFPlugin.Contract" minOccurs="0" name="sendMethod" type="q15:SendMethod" />
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="loginInfo" nillable="true" type="q16:LoginInfo" />
+        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q16:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -126,6 +127,95 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="SendPayoutCodeResult" nillable="true" type="q17:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUsersList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q18:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUsersListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="GetUsersListResult" nillable="true" type="q19:ResultOfArrayOfUserInfoxdEytY2q" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="user" nillable="true" type="q20:UserParam" />
+        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q21:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="CreateUserResult" nillable="true" type="q22:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userLogin" nillable="true" type="xs:string" />
+        <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q23:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="GetUserResult" nillable="true" type="q24:ResultOfUserParamxdEytY2q" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="user" nillable="true" type="q25:UserParam" />
+        <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q26:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="UpdateUserResult" nillable="true" type="q27:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userLogin" nillable="true" type="xs:string" />
+        <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q28:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="RemoveUserResult" nillable="true" type="q29:Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeAdminPass">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="newPass" nillable="true" type="xs:string" />
+        <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="sessionGuid" type="q30:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeAdminPassResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/WCFPlugin.DataContract" minOccurs="0" name="ChangeAdminPassResult" nillable="true" type="q31:Result" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

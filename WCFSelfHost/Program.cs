@@ -12,6 +12,7 @@ namespace WCFSelfHost
         {
             Cx.Client.Taxi.ClientsBounty.PluginParams.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
             PluginParams.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
+            UsersProvider.CreateFile(AppDomain.CurrentDomain.BaseDirectory);
 
             {
                 using (ServiceHost serviceHost = new ServiceHost(typeof (ClientBonusService)))
